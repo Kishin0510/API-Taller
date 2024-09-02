@@ -1,13 +1,18 @@
 ## Taller Tienda UCN 
-  La Tienda UCN busca implementar un e-commerce para satisfacer las necesidades y expectativas de todos sus clientes. Con este propósito, este proyecto se enfocará en desarrollar la API para la tienda virtual UCN
+  La Tienda UCN busca implementar un e-commerce para satisfacer las necesidades y expectativas de todos sus clientes. Con este propósito, este proyecto se enfocará en desarrollar la API para la tienda virtual UCN.
+  
 Integrantes Grupo 13:
-    1. Ignacio Javier Carvajal Canelo
-    2. Nicolás Patricio Tapia Carrasco
+  1. Ignacio Javier Carvajal Canelo
+  2. Nicolás Patricio Tapia Carrasco
+
 Profesor: 
-    Jorge Rivera Mancilla
+
+  Jorge Rivera Mancilla
+    
 Ayudantes: 
-    Guillermo Fuentes Ávila
-    Ernes Fuenzalida Tello
+
+  1. Guillermo Fuentes Ávila
+  2. Ernes Fuenzalida Tello
     
 ## Instalación
 1. Clona el repositorio en tu máquina local.

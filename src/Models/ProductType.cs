@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Api_Taller.src.Models
 {
-    public class Role
+    public class ProductType
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string Type { get; set; } = null!;
     }
 }

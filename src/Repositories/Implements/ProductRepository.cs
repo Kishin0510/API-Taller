@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Api_Taller.src.Models;
 using Api_Taller.src.Data;
-using Api_Taller.src.Interfaces;
+using Api_Taller.src.Repositories.Interfaces;
 
 namespace Api_Taller.src.Repositories
 {
@@ -72,32 +72,40 @@ namespace Api_Taller.src.Repositories
             {
                 products = products.Where(p => p.ProductType.Type == type).OrderBy(p => p.Price).ToList();
             }
-            return products; // Arreglar
+            return products;
         }
 
-        public Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(int typeId)
+        public async Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(string type)
         {
-            throw new NotImplementedException();
+            var products = await GetAvailableProducts();
+            if(!string.IsNullOrEmpty(type))
+            {
+                products = products.Where(p => p.ProductType.Type == type).OrderByDescending(p => p.Price).ToList();
+            }
+            return products;
         }
 
         public Task SaveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Product>> SortProductAscendant()
+        public async Task<IEnumerable<Product>> SortProductAscendant()
         {
-            throw new NotImplementedException();
+            var products = await GetAvailableProducts();
+            return products.OrderBy(p => p.Price).ToList();
         }
 
-        public Task<IEnumerable<Product>> SortProductDescendant()
+        public async Task<IEnumerable<Product>> SortProductDescendant()
         {
-            throw new NotImplementedException();
+            var products = await GetAvailableProducts();
+            return products.OrderByDescending(p => p.Price).ToList();
         }
 
-        public Task<bool> UpdateProduct(Product product)
+        public async Task<bool> UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            _context.Products.Update(product);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

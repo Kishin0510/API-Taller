@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Api_Taller.src.Models;
 
-namespace Api_Taller.src.Interfaces
+namespace Api_Taller.src.Repositories.Interfaces
 {
     public interface IProductRepository
     {
@@ -25,7 +25,7 @@ namespace Api_Taller.src.Interfaces
 
         Task<IEnumerable<Product>> GetProductsByTypeAndSortAscendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma ascendente
 
-        Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(int typeId); // Se obtienen todos los productos de un tipo ordenados de forma descendente
+        Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma descendente
 
         public Task SaveChanges(); // Se guardan los cambios en la base de datos
     }

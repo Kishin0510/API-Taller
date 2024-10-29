@@ -1,5 +1,7 @@
 using System.Runtime.CompilerServices;
 using Api_Taller.src.Models;
+using Api_Taller.src.DTOs;
+using Api_Taller.src.DTOs.Product;
 
 namespace Api_Taller.src.Repositories.Interfaces
 {
@@ -13,9 +15,9 @@ namespace Api_Taller.src.Repositories.Interfaces
 
         Task<bool> AddProduct(Product product); // Se agrega un producto
 
-        Task<bool> DeleteProduct(Product product); // Se elimina un producto
+        Task<bool> DeleteProduct(int id); // Se elimina un producto
 
-        Task<bool> UpdateProduct(Product product); // Se actualiza un producto
+        Task<bool> UpdateProduct(int id, EditProductDTO editProduct); // Se actualiza un producto
 
         Task<IEnumerable<Product>> GetProductsByType(string type); // Se obtienen todos los productos de un tipo
 
@@ -26,7 +28,5 @@ namespace Api_Taller.src.Repositories.Interfaces
         Task<IEnumerable<Product>> GetProductsByTypeAndSortAscendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma ascendente
 
         Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma descendente
-
-        public Task SaveChanges(); // Se guardan los cambios en la base de datos
     }
 }

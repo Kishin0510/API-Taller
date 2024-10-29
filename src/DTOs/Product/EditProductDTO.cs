@@ -8,12 +8,12 @@ namespace Api_Taller.src.DTOs.Product
         [MaxLength(64, ErrorMessage = "El Nombre debe tener a lo más 64 caracteres.")]
         public string? Name { get; set; }
 
-        public string? Price { get; set; } 
+        public int? Price { get; set; } 
 
-        public string? Stock { get; set; }
+        public int? Stock { get; set; }
 
         public IFormFile? Image { get; set; }
 
-        public string? ProductTypeId { get; set; }        
+        public int? ProductTypeId { get; set; }        
     }
 }

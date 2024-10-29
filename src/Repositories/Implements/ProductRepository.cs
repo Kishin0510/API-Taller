@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Api_Taller.src.Models;
 using Api_Taller.src.Data;
 using Api_Taller.src.Repositories.Interfaces;
+using Api_Taller.src.DTOs;
+using Api_Taller.src.DTOs.Product;
 
 namespace Api_Taller.src.Repositories
 {
@@ -21,8 +23,9 @@ namespace Api_Taller.src.Repositories
             return true;
         }
 
-        public async Task<bool> DeleteProduct(Product product)
+        public async Task<bool> DeleteProduct(int id)
         {
+            var product = await GetProductById(id);
             if(product == null)
             {
                 return false;
@@ -31,7 +34,6 @@ namespace Api_Taller.src.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-
         public async Task<IEnumerable<Product>> GetAvailableProducts()
         {
             var products = await _context.Products.Where(p => p.Stock > 0).ToListAsync();
@@ -85,11 +87,6 @@ namespace Api_Taller.src.Repositories
             return products;
         }
 
-        public Task SaveChanges()
-        {
-            return _context.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<Product>> SortProductAscendant()
         {
             var products = await GetAvailableProducts();
@@ -102,10 +99,21 @@ namespace Api_Taller.src.Repositories
             return products.OrderByDescending(p => p.Price).ToList();
         }
 
-        public async Task<bool> UpdateProduct(Product product)
+        public async Task<bool> UpdateProduct(int id, EditProductDTO editProduct)
         {
-            _context.Products.Update(product);
-            return await _context.SaveChangesAsync() > 0;
+            var product = await GetProductById(id);
+            if(product == null)
+            {
+                return false;
+            }
+            product.Name = editProduct.Name ?? product.Name;
+            product.Price = editProduct.Price ?? product.Price;
+            product.Stock = editProduct.Stock ?? product.Stock;
+            product.ProductTypeId = editProduct.ProductTypeId ?? product.ProductTypeId;
+            
+            _context.Entry(product).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

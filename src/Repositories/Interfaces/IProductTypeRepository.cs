@@ -10,5 +10,6 @@ namespace Api_Taller.src.Repositories.Interfaces
     {
         Task<IEnumerable<ProductType>> GetProductTypes();
         Task<bool> ValidProductType(int id);
+        Task<ProductType?> GetProductType(int id);
     }
 }

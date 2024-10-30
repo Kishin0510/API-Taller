@@ -30,7 +30,6 @@ namespace Api_Taller.src.Mappers
                 Name = addProductDTO.Name,
                 Price = addProductDTO.Price,
                 Stock = addProductDTO.Stock,
-                ImageUrl = addProductDTO.Image,
                 ProductTypeId = addProductDTO.ProductTypeId
             };
         }

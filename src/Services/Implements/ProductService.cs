@@ -1,8 +1,11 @@
 using Api_Taller.src.Models;
+using Api_Taller.src.Mappers;
 using Api_Taller.src.Services.Interfaces;
 using Api_Taller.src.Repositories.Interfaces;
 using Api_Taller.src.DTOs;
 using Api_Taller.src.DTOs.Product;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace Api_Taller.src.Services.Implements
 {
@@ -10,14 +13,16 @@ namespace Api_Taller.src.Services.Implements
     {
         private readonly IProductRepository _productRepository;
         private readonly IProductTypeRepository _productTypeRepository;
+        private readonly Cloudinary _cloudinary;
 
-        public ProductService(IProductRepository productRepository, IProductTypeRepository productTypeRepository)
+        public ProductService(IProductRepository productRepository, IProductTypeRepository productTypeRepository, Cloudinary cloudinary)
         {
             _productRepository = productRepository;
             _productTypeRepository = productTypeRepository;
+            _cloudinary = cloudinary;
         }
 
-        public Task<bool> AddProduct(AddProductDTO addProductDTO)
+        public async Task<bool> AddProduct(AddProductDTO addProductDTO)
         {
             if (!_productTypeRepository.ValidProductType(addProductDTO.ProductTypeId).Result) 
             {
@@ -27,6 +32,40 @@ namespace Api_Taller.src.Services.Implements
             {
                 throw new Exception("Un producto con el mismo nombre y tipo ya existe");
             }
+            if(addProductDTO.Image == null)
+            {
+                throw new Exception("Imagen requerida");
+            }
+            if(addProductDTO.Image.ContentType != "image/png" && addProductDTO.Image.ContentType != "image/jpeg")
+            {
+                throw new Exception("Formato de imagen no válido");
+            }
+            if(addProductDTO.Image.Length > 10 * 1024 * 1024) 
+            {
+                throw new Exception("Tamaño de imagen no válido, debe pesar menos de 10MB");
+            }
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(addProductDTO.Image.FileName, addProductDTO.Image.OpenReadStream()),
+                Folder = "products_images"
+            };
+
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+            if(uploadResult.Error != null)
+            {
+                throw new Exception("Error al subir la imagen");
+            }
+            var newProduct = addProductDTO.ToProductModel();
+            var productType = await _productTypeRepository.GetProductType(addProductDTO.ProductTypeId);
+            newProduct.ProductType = productType;
+            newProduct.ImageUrl = uploadResult.SecureUrl.AbsoluteUri;
+            newProduct.ImageId = uploadResult.PublicId;
+
+            var addResult = await _productRepository.AddProduct(newProduct);
+            return addResult;
+            
+
 
         }
 

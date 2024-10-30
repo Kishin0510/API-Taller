@@ -12,6 +12,17 @@ namespace Api_Taller.src.Repositories.Implements
         {
             _context = context;
         }
+
+        public Task<ProductType?> GetProductType(int id)
+        {
+            var productType = _context.ProductTypes.Where(p => p.Id == id).FirstOrDefaultAsync();
+            if(productType == null)
+            {
+                throw new Exception("Tipo de producto no encontrado");
+            }
+            return productType;
+        }
+
         public async Task<IEnumerable<ProductType>> GetProductTypes()
         {
             var productTypes = await _context.ProductTypes.ToListAsync();

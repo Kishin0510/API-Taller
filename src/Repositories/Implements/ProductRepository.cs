@@ -115,5 +115,11 @@ namespace Api_Taller.src.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> ValidProductByNameAndType(string name, int productTypeId)
+        {
+            var product = await _context.Products.Where(p => p.Name == name && p.ProductTypeId == productTypeId).FirstOrDefaultAsync();
+            return product != null;
+        }
     }
 }

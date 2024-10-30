@@ -28,5 +28,7 @@ namespace Api_Taller.src.Repositories.Interfaces
         Task<IEnumerable<Product>> GetProductsByTypeAndSortAscendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma ascendente
 
         Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma descendente
+
+        Task<bool> ValidProductByNameAndType(string name, int productTypeId); // Se valida si un producto existe por su nombre y tipo
     }
 }

@@ -17,6 +17,6 @@ namespace Api_Taller.src.DTOs
         public required IFormFile Image { get; set;}
 
         [Required(ErrorMessage = "El campo Tipo de Producto es requerido")]
-        public required string ProductTypeId { get; set; } = null!;
+        public required int ProductTypeId { get; set; } = 0;
     }
 }

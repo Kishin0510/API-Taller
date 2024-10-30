@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "DmBSAtiocSqY3bH9vn0FWA0xQseIt/+Q+s74bojUuN/sfW6rNSyNthieg9kz5ZWlkJLWSRCk+0n4aN8euRZcqA==",
+  "dgSpecHash": "OZWCU5gqf+Flqc/FzqQTQIoogpI7mRxzLSwXhsQMbTOGX2OKT3Ii8LHtDDnY3NkszRpTO588TtwSQMYdU8nMCg==",
   "success": true,
   "projectFilePath": "C:\\Users\\NicoK\\OneDrive\\Documentos\\Universidad\\2024 - Semestre II\\Intro al Desarrollo WebMóvil\\Taller\\Api-Taller\\Api-Taller.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\NicoK\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\bogus\\35.6.1\\bogus.35.6.1.nupkg.sha512",
+    "C:\\Users\\NicoK\\.nuget\\packages\\cloudinarydotnet\\1.26.2\\cloudinarydotnet.1.26.2.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\dotnetenv\\3.1.1\\dotnetenv.3.1.1.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.3\\microsoft.aspnetcore.openapi.8.0.3.nupkg.sha512",
@@ -42,6 +43,7 @@
     "C:\\Users\\NicoK\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
+    "C:\\Users\\NicoK\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\NicoK\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",

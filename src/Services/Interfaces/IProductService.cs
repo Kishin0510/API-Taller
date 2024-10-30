@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Api_Taller.src.DTOs;
 using Api_Taller.src.DTOs.Product;
 
 namespace Api_Taller.src.Services.Interfaces

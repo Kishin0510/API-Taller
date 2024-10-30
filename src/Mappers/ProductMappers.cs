@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api_Taller.src.DTOs;
 using Api_Taller.src.DTOs.Product;
 using Api_Taller.src.Models;
 

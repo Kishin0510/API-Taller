@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Api_Taller.src.Models;
 using Api_Taller.src.Data;
 using Api_Taller.src.Repositories.Interfaces;
-using Api_Taller.src.DTOs;
 using Api_Taller.src.DTOs.Product;
 
 namespace Api_Taller.src.Repositories

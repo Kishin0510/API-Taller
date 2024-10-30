@@ -2,7 +2,6 @@ using Api_Taller.src.Models;
 using Api_Taller.src.Mappers;
 using Api_Taller.src.Services.Interfaces;
 using Api_Taller.src.Repositories.Interfaces;
-using Api_Taller.src.DTOs;
 using Api_Taller.src.DTOs.Product;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -84,9 +83,10 @@ namespace Api_Taller.src.Services.Implements
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ProductDTO>> GetProducts()
+        public async Task<IEnumerable<ProductDTO>> GetProducts()
         {
-            throw new NotImplementedException();
+            var products = await _productRepository.GetProducts();
+            return products.Select(p => p.ToProductDTO());
         }
 
         public Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query)

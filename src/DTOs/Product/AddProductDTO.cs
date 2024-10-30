@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Api_Taller.src.DTOs
+namespace Api_Taller.src.DTOs.Product
 {
     public class AddProductDTO
     {

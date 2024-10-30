@@ -1,6 +1,5 @@
 using System.Runtime.CompilerServices;
 using Api_Taller.src.Models;
-using Api_Taller.src.DTOs;
 using Api_Taller.src.DTOs.Product;
 
 namespace Api_Taller.src.Repositories.Interfaces

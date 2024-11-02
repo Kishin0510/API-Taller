@@ -70,17 +70,81 @@ namespace Api_Taller.src.Services.Implements
 
         public Task<bool> DeleteProduct(int id)
         {
+            var product = _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                throw new Exception("Producto no encontrado");
+            }
+            var deleteResult = _productRepository.DeleteProduct(id);
+            return deleteResult;
+        }
+
+        public async Task<bool> EditProduct(int id, EditProductDTO editProductDTO)
+        {
+            if (editProductDTO.ProductTypeId != null)
+            {
+                var validProductType = await _productTypeRepository.ValidProductType((int)editProductDTO.ProductTypeId);
+                if (!validProductType) {throw new Exception("Tipo de Producto no válido");}
+            }
+            var product = await _productRepository.GetProductById(id);
+            if (product == null) {throw new Exception("Producto no encontrado");}
+
+            if (editProductDTO.Name == null && editProductDTO.ProductTypeId != null)
+            {
+                var validProduct = await _productRepository.ValidProductByNameAndType(product.Name, (int)editProductDTO.ProductTypeId);
+                if (validProduct) {throw new Exception("Un producto con el mismo tipo ya existe");}
+            }
+            
+            if (editProductDTO.Name != null && editProductDTO.ProductTypeId != null)
+            {
+                var validProduct = await _productRepository.ValidProductByNameAndType(editProductDTO.Name, (int)editProductDTO.ProductTypeId);
+                if (validProduct) {throw new Exception("Un producto con el mismo nombre y tipo ya existe");}
+            }
+
+            if (editProductDTO.Name != null && editProductDTO.ProductTypeId == null)
+            {
+                var validProduct = await _productRepository.ValidProductByNameAndType(editProductDTO.Name, product.ProductTypeId);
+                if (validProduct) {throw new Exception("Un producto con el mismo nombre ya existe");}
+            }
+
+            if (editProductDTO.Image != null)
+            {
+                if (editProductDTO.Image.ContentType != "image/png" && editProductDTO.Image.ContentType != "image/jpeg")
+                {
+                    throw new Exception("Formato de imagen no válido");
+                }
+                if (editProductDTO.Image.Length > 10 * 1024 * 1024)
+                {
+                    throw new Exception("Tamaño de imagen no válido, debe pesar menos de 10MB");
+                }
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(editProductDTO.Image.FileName, editProductDTO.Image.OpenReadStream()),
+                    Folder = "products_images"
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.Error != null)
+                {
+                    throw new Exception("Error al subir la imagen");
+                }
+                
+            }
+            // arreglar
             throw new NotImplementedException();
         }
 
-        public Task<bool> EditProduct(int id, EditProductDTO editProductDTO)
+        public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
-        {
-            throw new NotImplementedException();
+            var products = await _productRepository.GetAvailableProducts();
+            var productDTOs = products.Select(async p => 
+            {
+                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+                return p.ToProductDTO();
+            }).ToList();
+            
+            return await Task.WhenAll(productDTOs);
         }
 
         public async Task<IEnumerable<ProductDTO>> GetProducts()

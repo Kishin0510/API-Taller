@@ -23,6 +23,13 @@ namespace Api_Taller.src.Controllers
             return Ok(products);
         }
 
+        [HttpGet("available/{pageNum}/{pageSize}")]
+        public ActionResult<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
+        {
+            var products = _productService.GetAvailableProducts(pageNum, pageSize);
+            return Ok(products);
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<string>> AddProduct([FromForm] AddProductDTO addProductDTO)
@@ -36,5 +43,31 @@ namespace Api_Taller.src.Controllers
                 return BadRequest(e.Message);
             }
         }	
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<string>> EditProduct(int id, [FromForm] EditProductDTO editProductDTO)
+        {
+            try {
+                var valor = await _productService.EditProduct(id, editProductDTO);
+                return Ok("Producto editado correctamente");
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<string>> DeleteProduct(int id)
+        {
+            try {
+                var valor = await _productService.DeleteProduct(id);
+                return Ok("Producto eliminado correctamente");
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -98,7 +98,7 @@ namespace Api_Taller.src.Repositories
             return products.OrderByDescending(p => p.Price).ToList();
         }
 
-        public async Task<bool> UpdateProduct(int id, EditProductDTO editProduct)
+        public async Task<bool> UpdateProduct(int id, EditProductDTO editProduct, string? imageUrl,string? imageId )
         {
             var product = await GetProductById(id);
             if(product == null)
@@ -109,6 +109,8 @@ namespace Api_Taller.src.Repositories
             product.Price = editProduct.Price ?? product.Price;
             product.Stock = editProduct.Stock ?? product.Stock;
             product.ProductTypeId = editProduct.ProductTypeId ?? product.ProductTypeId;
+            product.ImageUrl = imageUrl ?? product.ImageUrl;
+            product.ImageId = imageId ?? product.ImageId;
             
             _context.Entry(product).State = EntityState.Modified;
             await _context.SaveChangesAsync();

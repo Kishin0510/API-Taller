@@ -129,10 +129,11 @@ namespace Api_Taller.src.Services.Implements
                 {
                     throw new Exception("Error al subir la imagen");
                 }
-                
+                string newImageUrl = uploadResult.SecureUrl.AbsoluteUri;
+                string newImageId = uploadResult.PublicId;
             }
-            // arreglar
-            throw new NotImplementedException();
+            var editProduct = await _productRepository.UpdateProduct(id, editProductDTO, product.ImageUrl, product.ImageId);
+            return editProduct;
         }
 
         public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)

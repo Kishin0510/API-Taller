@@ -16,7 +16,7 @@ namespace Api_Taller.src.Repositories.Interfaces
 
         Task<bool> DeleteProduct(int id); // Se elimina un producto
 
-        Task<bool> UpdateProduct(int id, EditProductDTO editProduct); // Se actualiza un producto
+        Task<bool> UpdateProduct(int id, EditProductDTO editProduct, string? imageUrl, string? imageId); // Se actualiza un producto
 
         Task<IEnumerable<Product>> GetProductsByType(string type); // Se obtienen todos los productos de un tipo
 

@@ -18,15 +18,15 @@ namespace Api_Taller.src.Repositories.Interfaces
 
         Task<bool> UpdateProduct(int id, EditProductDTO editProduct, string? imageUrl, string? imageId); // Se actualiza un producto
 
-        Task<IEnumerable<Product>> GetProductsByType(string type); // Se obtienen todos los productos de un tipo
+        Task<IEnumerable<Product>> GetProductsByType(int type); // Se obtienen todos los productos de un tipo
 
         Task<IEnumerable<Product>> SortProductAscendant(); // Se obtienen todos los productos ordenados de forma ascendente
 
         Task<IEnumerable<Product>> SortProductDescendant(); // Se obtienen todos los productos ordenados de forma descendente
 
-        Task<IEnumerable<Product>> GetProductsByTypeAndSortAscendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma ascendente
+        Task<IEnumerable<Product>> GetProductsByTypeAndSortAscendant(int type); // Se obtienen todos los productos de un tipo ordenados de forma ascendente
 
-        Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(string type); // Se obtienen todos los productos de un tipo ordenados de forma descendente
+        Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(int type); // Se obtienen todos los productos de un tipo ordenados de forma descendente
 
         Task<bool> ValidProductByNameAndType(string name, int productTypeId); // Se valida si un producto existe por su nombre y tipo
     }

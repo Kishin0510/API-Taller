@@ -161,9 +161,46 @@ namespace Api_Taller.src.Services.Implements
 
         }
 
-        public Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query)
+        public async Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query, string order)
         {
-            throw new NotImplementedException();
+            var productTypeId = await _productTypeRepository.GetProductTypes();
+            if (order == "asc" && query != "")
+            {
+                var type = productTypeId.FirstOrDefault(p => p.Type == query);
+                if (type == null)
+                {
+                    throw new Exception("Tipo de producto no encontrado");
+                }
+                var typeId = type.Id;
+                var products = await  _productRepository.GetProductsByTypeAndSortAscendant(typeId);
+                return products.Select(p => p.ToProductDTO());
+            }
+            else if (order == "desc" && query != "")
+            {
+                var type = productTypeId.FirstOrDefault(p => p.Type == query);
+                if (type == null)
+                {
+                    throw new Exception("Tipo de producto no encontrado");
+                }
+                var typeId = type.Id;
+                var products = await _productRepository.GetProductsByTypeAndSortDescendant(typeId);
+                return products.Select(p => p.ToProductDTO());
+            }
+            else if (order == "asc" && query == "")
+            {
+                var products = await _productRepository.SortProductAscendant();
+                return products.Select(p => p.ToProductDTO());
+            }
+            else if (order == "desc" && query == "")
+            {
+                var products = await _productRepository.SortProductDescendant();
+                return products.Select(p => p.ToProductDTO());
+            }
+            else
+            {
+                throw new Exception("Error en la búsqueda");
+            }
+
         }
 
         public Task<IEnumerable<ProductDTO>> SearchProducts(string query)

@@ -11,7 +11,7 @@ namespace Api_Taller.src.Services.Interfaces
 
         Task<IEnumerable<ProductDTO>> SearchProducts(string query);
 
-        Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query);
+        Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query, string order);
 
         Task<bool> AddProduct(AddProductDTO addProductDTO);
 

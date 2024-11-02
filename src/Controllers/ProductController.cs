@@ -69,5 +69,12 @@ namespace Api_Taller.src.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("available/search")]
+        public ActionResult<IEnumerable<ProductDTO>> SearchAvailableProducts([FromQuery] string query, [FromQuery] string order)
+        {
+            var products = _productService.SearchAvailableProducts(query, order);
+            return Ok(products);
+        }
     }
 }

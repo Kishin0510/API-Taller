@@ -56,32 +56,32 @@ namespace Api_Taller.src.Repositories
             return products;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByType(string type)
+        public async Task<IEnumerable<Product>> GetProductsByType(int type)
         {
             var products = await GetAvailableProducts();
-            if (!string.IsNullOrEmpty(type))
+            if (type > 0)
             {
-                products = products.Where(p => p.ProductType.Type == type).ToList();
+                products = products.Where(p => p.ProductTypeId == type).ToList();
             }
             return products;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByTypeAndSortAscendant(string type)
+        public async Task<IEnumerable<Product>> GetProductsByTypeAndSortAscendant(int type)
         {
             var products = await GetAvailableProducts();
-            if(!string.IsNullOrEmpty(type))
+            if(type > 0)
             {
-                products = products.Where(p => p.ProductType.Type == type).OrderBy(p => p.Price).ToList();
+                products = products.Where(p => p.ProductTypeId == type).OrderBy(p => p.Price).ToList();
             }
             return products;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(string type)
+        public async Task<IEnumerable<Product>> GetProductsByTypeAndSortDescendant(int type)
         {
             var products = await GetAvailableProducts();
-            if(!string.IsNullOrEmpty(type))
+            if(type > 0)
             {
-                products = products.Where(p => p.ProductType.Type == type).OrderByDescending(p => p.Price).ToList();
+                products = products.Where(p => p.ProductTypeId == type).OrderByDescending(p => p.Price).ToList();
             }
             return products;
         }

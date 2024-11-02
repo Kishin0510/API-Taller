@@ -54,12 +54,17 @@ namespace Api_Taller.src.Data.Migrations
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("PurchaseId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Stock")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductTypeId");
+
+                    b.HasIndex("PurchaseId");
 
                     b.ToTable("Products");
                 });
@@ -179,21 +184,6 @@ namespace Api_Taller.src.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ProductPurchase", b =>
-                {
-                    b.Property<int>("ProductListId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PurchaseListId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductListId", "PurchaseListId");
-
-                    b.HasIndex("PurchaseListId");
-
-                    b.ToTable("ProductPurchase");
-                });
-
             modelBuilder.Entity("Api_Taller.src.Models.Product", b =>
                 {
                     b.HasOne("Api_Taller.src.Models.ProductType", "ProductType")
@@ -201,6 +191,10 @@ namespace Api_Taller.src.Data.Migrations
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Api_Taller.src.Models.Purchase", null)
+                        .WithMany("ProductList")
+                        .HasForeignKey("PurchaseId");
 
                     b.Navigation("ProductType");
                 });
@@ -235,19 +229,9 @@ namespace Api_Taller.src.Data.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("ProductPurchase", b =>
+            modelBuilder.Entity("Api_Taller.src.Models.Purchase", b =>
                 {
-                    b.HasOne("Api_Taller.src.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api_Taller.src.Models.Purchase", null)
-                        .WithMany()
-                        .HasForeignKey("PurchaseListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("ProductList");
                 });
 #pragma warning restore 612, 618
         }

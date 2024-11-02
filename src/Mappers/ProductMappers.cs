@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api_Taller.src.DTOs.Product;
 using Api_Taller.src.Models;
+using Api_Taller.src.Repositories.Interfaces;
 
 namespace Api_Taller.src.Mappers
 {
@@ -17,8 +18,8 @@ namespace Api_Taller.src.Mappers
                 Name = productModel.Name,
                 Price = productModel.Price,
                 Stock = productModel.Stock,
-                ImgURL = productModel.ImageUrl,
-                ProductType = productModel.ProductType
+                ImgURL = productModel.ImageUrl ?? string.Empty,
+                ProductType = productModel.ProductType?.Type ?? string.Empty
             };
         }
 

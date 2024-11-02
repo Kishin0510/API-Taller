@@ -13,6 +13,6 @@ namespace Api_Taller.src.DTOs.Product
         public int Price { get; set; } = 0;
         public int Stock { get; set; } = 0;
         public string ImgURL { get; set; } = string.Empty;
-        public ProductType ProductType { get; set; } = null!;
+        public string ProductType { get; set; } = string.Empty;
     }
 }

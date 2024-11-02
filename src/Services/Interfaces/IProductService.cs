@@ -1,4 +1,5 @@
 using Api_Taller.src.DTOs.Product;
+using Api_Taller.src.Models;
 
 namespace Api_Taller.src.Services.Interfaces
 {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Api_Taller.src.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class PurchaseProduct : Migration
+    public partial class InitialCrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,30 +48,6 @@ namespace Api_Taller.src.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Price = table.Column<int>(type: "INTEGER", nullable: false),
-                    Stock = table.Column<int>(type: "INTEGER", nullable: false),
-                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
-                    ImageId = table.Column<string>(type: "TEXT", nullable: true),
-                    ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductTypes_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,38 +109,44 @@ namespace Api_Taller.src.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductPurchase",
+                name: "Products",
                 columns: table => new
                 {
-                    ProductListId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PurchaseListId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<int>(type: "INTEGER", nullable: false),
+                    Stock = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageId = table.Column<string>(type: "TEXT", nullable: true),
+                    ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PurchaseId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductPurchase", x => new { x.ProductListId, x.PurchaseListId });
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductPurchase_Products_ProductListId",
-                        column: x => x.ProductListId,
-                        principalTable: "Products",
+                        name: "FK_Products_ProductTypes_ProductTypeId",
+                        column: x => x.ProductTypeId,
+                        principalTable: "ProductTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductPurchase_Purchases_PurchaseListId",
-                        column: x => x.PurchaseListId,
+                        name: "FK_Products_Purchases_PurchaseId",
+                        column: x => x.PurchaseId,
                         principalTable: "Purchases",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductPurchase_PurchaseListId",
-                table: "ProductPurchase",
-                column: "PurchaseListId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductTypeId",
                 table: "Products",
                 column: "ProductTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_PurchaseId",
+                table: "Products",
+                column: "PurchaseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_UserId",
@@ -186,16 +168,13 @@ namespace Api_Taller.src.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductPurchase");
-
-            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Purchases");
+                name: "ProductTypes");
 
             migrationBuilder.DropTable(
-                name: "ProductTypes");
+                name: "Purchases");
 
             migrationBuilder.DropTable(
                 name: "Users");

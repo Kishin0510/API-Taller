@@ -78,6 +78,15 @@ namespace Api_Taller.src.Data
                         .RuleFor(p => p.ProductTypeId, f => { var randomNumber = f.Random.Number(1,5); return randomNumber;})
                         .RuleFor(p => p.ProductType, (f,p) => context.ProductTypes.First(pt => pt.Id == p.ProductTypeId));
                     var products = productFaker.Generate(10);
+                    for (int i = 0; i < products.Count; i++)
+                    {
+                        ProductType productType = context.ProductTypes.FirstOrDefault(p => p.Id == products[i].ProductTypeId);
+                        Console.WriteLine(productType.Type);
+                        if (productType != null)
+                        {
+                            products[i].ProductType = productType;
+                        }
+                    }
                     context.Products.AddRange(products);
                     context.SaveChanges();
                 }

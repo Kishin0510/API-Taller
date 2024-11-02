@@ -86,7 +86,14 @@ namespace Api_Taller.src.Services.Implements
         public async Task<IEnumerable<ProductDTO>> GetProducts()
         {
             var products = await _productRepository.GetProducts();
-            return products.Select(p => p.ToProductDTO());
+            var productDTOs = products.Select(async p => 
+            {
+                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+                return p.ToProductDTO();
+            }).ToList();
+
+            return await Task.WhenAll(productDTOs);
+
         }
 
         public Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query)

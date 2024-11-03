@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Api_Taller.src.DTOs.Product;
+using Api_Taller.src.Models;
 
 namespace Api_Taller.src.DTOs.User
 {
@@ -12,7 +8,10 @@ namespace Api_Taller.src.DTOs.User
         public string Rut { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string NameRol { get; set; } = null!;
-        public List<ProductDTO> Products { get; set; } = [];
+        public DateTime Birthdate { get; set; }
+        public bool Active { get; set; }
+        public Gender Gender { get; set; } = null!;
+        public Role Rol { get; set; } = null!;
+
     }
 }

@@ -18,6 +18,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<UserDTO>> GetUsers()
         {
             var users = _userService.GetUsers();
@@ -25,6 +26,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpPut("{id}/password")]
+        [Authorize]
         public async Task<ActionResult<string>> ChangePassword (int id, [FromBody] ChangePasswordDTO changePasswordDto)
         {
             try
@@ -42,6 +44,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpPut("{id}/state")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<string>> ChangeUserState(int id, [FromBody] string newState)
         {
             try
@@ -61,6 +64,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<string>> EditUser(int id, [FromBody] EditUserDTO editUserDTO)
         {
             try {
@@ -78,6 +82,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet("search")]
+        [Authorize (Roles = "Admin")]
         public ActionResult<IEnumerable<UserDTO>> SearchUsers([FromQuery] string query)
         {
             var user = _userService.SearchUsers(query);

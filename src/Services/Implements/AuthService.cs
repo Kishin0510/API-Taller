@@ -7,6 +7,7 @@ using Api_Taller.src.Repositories.Interfaces;
 using Api_Taller.src.Models;
 using Microsoft.IdentityModel.Tokens;
 using Api_Taller.src.Mappers;
+using System.Diagnostics;
 
 namespace Api_Taller.src.Services.Implements
 {
@@ -75,16 +76,17 @@ namespace Api_Taller.src.Services.Implements
 
         public async Task<LoggedUserDTO> RegisterUser(RegisterUserDTO registerUserDto)
         {
+
             var user = registerUserDto.RegisterUserDTOToUser();
             if (!_genderRepository.ValidGenderId(user.GenderId).Result)
             {
                 throw new Exception("Genero no valido");
             }
-            if (!_userRepository.VerifyEmail(user.Email).Result)
+            if (_userRepository.VerifyEmail(user.Email).Result)
             {
                 throw new Exception("Email ya registrado");
             }
-            if (!_userRepository.VerifyRut(user.RUT).Result)
+            if (_userRepository.VerifyRut(user.RUT).Result)
             {
                 throw new Exception("Rut ya registrado");
             }

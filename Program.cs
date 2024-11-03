@@ -36,6 +36,13 @@ builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+var key = builder.Configuration.GetSection("AppSettings:Token").Value;
+if (string.IsNullOrEmpty(key))
+{
+    throw new ArgumentNullException("AppSettings:Token", "JWT secret key is not configured.");
+}
 
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
@@ -45,8 +52,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
         ValidateIssuerSigningKey = true,
         ValidateIssuer = false,
         ValidateAudience = false,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            builder.Configuration.GetSection("AppSettings:Token").Value!))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
     };
 });
 

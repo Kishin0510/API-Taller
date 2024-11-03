@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api_Taller.src.Services.Interfaces;
 using Api_Taller.src.Models;
 using Api_Taller.src.DTOs.Product;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api_Taller.src.Controllers
 {
@@ -17,6 +18,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<ProductDTO>> GetProducts()
         {
             var products = _productService.GetProducts();
@@ -24,6 +26,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet("available/{pageNum}/{pageSize}")]
+        [Authorize(Roles = "Usuario")]
         public ActionResult<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
         {
             var products = _productService.GetAvailableProducts(pageNum, pageSize);
@@ -32,6 +35,7 @@ namespace Api_Taller.src.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<string>> AddProduct([FromForm] AddProductDTO addProductDTO)
         {
             try {
@@ -45,6 +49,7 @@ namespace Api_Taller.src.Controllers
         }	
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<string>> EditProduct(int id, [FromForm] EditProductDTO editProductDTO)
         {
             try {
@@ -58,6 +63,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]   
         public async Task<ActionResult<string>> DeleteProduct(int id)
         {
             try {
@@ -71,6 +77,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet("available/search")]
+        [Authorize(Roles = "Usuario")]
         public ActionResult<IEnumerable<ProductDTO>> SearchAvailableProducts([FromQuery] string query, [FromQuery] string order)
         {
             var products = _productService.SearchAvailableProducts(query, order);

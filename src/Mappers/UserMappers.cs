@@ -33,7 +33,8 @@ namespace Api_Taller.src.Mappers
                 Name = registerUserDTO.Name,
                 Birthday = DateTime.Parse(registerUserDTO.Birthday),
                 Email = registerUserDTO.Email,
-                GenderId = int.Parse(registerUserDTO.GenderId)
+                GenderId = int.Parse(registerUserDTO.GenderId),
+                Password = registerUserDTO.Password,
 
             };
         }

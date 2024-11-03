@@ -26,7 +26,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet("available/{pageNum}/{pageSize}")]
-        [Authorize(Roles = "Usuario")]
+        [Authorize(Roles = "User")]
         public ActionResult<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
         {
             var products = _productService.GetAvailableProducts(pageNum, pageSize);
@@ -77,7 +77,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet("available/search")]
-        [Authorize(Roles = "Usuario")]
+        [Authorize(Roles = "User")]
         public ActionResult<IEnumerable<ProductDTO>> SearchAvailableProducts([FromQuery] string query, [FromQuery] string order)
         {
             var products = _productService.SearchAvailableProducts(query, order);

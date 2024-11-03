@@ -58,7 +58,7 @@ namespace Api_Taller.src.Data
                         Birthday = new DateTime(2000,10,25),
                         GenderId = 1,
                         Gender = context.Genders.First(g => g.Type == "Masculino"),
-                        Password = BCrypt.Net.BCrypt.HashPassword("P4sssw0rd"),
+                        Password = BCrypt.Net.BCrypt.HashPassword("P4ssw0rd"),
                         IsEnabled = true,
                         RoleId = context.Roles.First(r => r.Name == "Admin").Id,
                         Role = context.Roles.First(r => r.Name == "Admin")

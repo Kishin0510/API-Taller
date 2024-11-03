@@ -13,7 +13,7 @@ namespace Api_Taller.src.Services.Interfaces
 
         Task<bool> EditUserInfo(int id, EditUserDTO editUserDto);
 
-        Task<IEnumerable<UserDTO>> GetUsers();
+        Task<IEnumerable<User>> GetUsers();
 
         Task<IEnumerable<Gender>> GetGenders();
 

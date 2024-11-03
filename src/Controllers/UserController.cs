@@ -7,7 +7,7 @@ using Api_Taller.src.Services.Interfaces;
 namespace Api_Taller.src.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/user")]
 
     public class UserController : Controller
     {
@@ -25,7 +25,6 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpPut("{id}/password")]
-        [Authorize]
         public async Task<ActionResult<string>> ChangePassword (int id, [FromBody] ChangePasswordDTO changePasswordDto)
         {
             try

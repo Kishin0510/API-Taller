@@ -44,7 +44,7 @@ namespace Api_Taller.src.Controllers
             }
         }	
 
-        [HttpPut("{id: int}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<string>> EditProduct(int id, [FromForm] EditProductDTO editProductDTO)
         {
             try {
@@ -57,7 +57,7 @@ namespace Api_Taller.src.Controllers
             }
         }
 
-        [HttpDelete("{id: int}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<string>> DeleteProduct(int id)
         {
             try {

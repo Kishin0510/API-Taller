@@ -76,11 +76,10 @@ namespace Api_Taller.src.Services.Implements
             return genders;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
             var users = await _userRepository.GetUsers();
-            var UserDTO = users.Select(u => UserMappers.ToUserDTO(u));
-            return UserDTO;
+            return users;
         }
 
         public async Task<IEnumerable<UserDTO>> SearchUsers(string query)

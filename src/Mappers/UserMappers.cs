@@ -24,5 +24,18 @@ namespace Api_Taller.src.Mappers
             };
 
         }
+        public static User RegisterUserDTOToUser(this RegisterUserDTO registerUserDTO)
+        {
+            return new User
+            {
+
+                RUT = registerUserDTO.Rut,
+                Name = registerUserDTO.Name,
+                Birthday = DateTime.Parse(registerUserDTO.Birthday),
+                Email = registerUserDTO.Email,
+                GenderId = int.Parse(registerUserDTO.GenderId)
+
+            };
+        }
     }
 }

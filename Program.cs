@@ -1,5 +1,7 @@
 using Api_Taller.src.Data;
+using System.Text;
 using DotNetEnv;
+using Microsoft.IdentityModel.Tokens;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Api_Taller.src.Helpers;
@@ -30,6 +32,19 @@ builder.Services.AddDbContext<ApplicationDBContext>(opt => opt.UseSqlite(connect
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            builder.Configuration.GetSection("AppSettings:Token").Value!))
+    };
+});
+
 
 var app = builder.Build();
 

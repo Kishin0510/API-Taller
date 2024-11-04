@@ -1,5 +1,7 @@
 using Api_Taller.src.Data;
+using System.Text;
 using DotNetEnv;
+using Microsoft.IdentityModel.Tokens;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Api_Taller.src.Helpers;
@@ -30,6 +32,29 @@ builder.Services.AddDbContext<ApplicationDBContext>(opt => opt.UseSqlite(connect
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IGenderRepository, GenderRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+var key = builder.Configuration.GetSection("AppSettings:Token").Value;
+if (string.IsNullOrEmpty(key))
+{
+    throw new ArgumentNullException("AppSettings:Token", "JWT secret key is not configured.");
+}
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+    };
+});
 
 var app = builder.Build();
 
@@ -48,6 +73,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
 app.MapControllers();
-
 app.Run();

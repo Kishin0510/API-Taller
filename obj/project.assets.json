@@ -8303,19 +8303,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\NicoK\\.nuget\\packages\\": {}
+    "C:\\Users\\piti2\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\NicoK\\OneDrive\\Documentos\\Universidad\\2024 - Semestre II\\Intro al Desarrollo WebMóvil\\Taller\\Api-Taller\\Api-Taller.csproj",
+      "projectUniqueName": "D:\\Programas\\Repositorios\\API-Taller\\Api-Taller.csproj",
       "projectName": "Api-Taller",
-      "projectPath": "C:\\Users\\NicoK\\OneDrive\\Documentos\\Universidad\\2024 - Semestre II\\Intro al Desarrollo WebMóvil\\Taller\\Api-Taller\\Api-Taller.csproj",
-      "packagesPath": "C:\\Users\\NicoK\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\NicoK\\OneDrive\\Documentos\\Universidad\\2024 - Semestre II\\Intro al Desarrollo WebMóvil\\Taller\\Api-Taller\\obj\\",
+      "projectPath": "D:\\Programas\\Repositorios\\API-Taller\\Api-Taller.csproj",
+      "packagesPath": "C:\\Users\\piti2\\.nuget\\packages\\",
+      "outputPath": "D:\\Programas\\Repositorios\\API-Taller\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\NicoK\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\piti2\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8412,7 +8412,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

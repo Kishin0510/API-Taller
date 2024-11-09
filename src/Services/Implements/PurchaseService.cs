@@ -54,7 +54,11 @@ namespace Api_Taller.src.Services.Implements
         public async Task<PurchaseDTO> GetPurchaseById(int id)
         {
             var purchase = await _purchaseRepository.GetPurchaseById(id);
-            return purchase?.ToPurchaseDto();
+            if (purchase == null)
+            {
+                throw new Exception("Compra no encontrada");
+            }
+            return purchase.ToPurchaseDto();
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api_Taller.src.DTOs.Product;
 using Api_Taller.src.DTOs.Purchase;
 using Api_Taller.src.Models;
 
@@ -20,9 +21,22 @@ namespace Api_Taller.src.Mappers
                 ProductList = purchaseModel.ProductList.Select(p => p.ToProductDTO()).ToList(),
                 Country = purchaseModel.Country,
                 City = purchaseModel.City,
-                Comune = purchaseModel.Commune,
+                Commune = purchaseModel.Commune,
                 Street = purchaseModel.Street,
                 Quantities = purchaseModel.Quantities
+            };
+        }
+        public static Purchase ToPurchaseModel(this AddPurchaseDTO addpurchaseDTO)
+        {
+            return new Purchase
+            {
+                PurchaseDate = DateTime.Now,
+                ProductList = addpurchaseDTO.ProductIds.Select(id => new Product { Id = id }).ToList(),
+                Country = addpurchaseDTO.Country,
+                City = addpurchaseDTO.City,
+                Commune = addpurchaseDTO.Commune,
+                Street = addpurchaseDTO.Street,
+                Quantities = addpurchaseDTO.Quantities
             };
         }
     }

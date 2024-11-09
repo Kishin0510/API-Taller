@@ -17,7 +17,7 @@ namespace Api_Taller.src.DTOs.Purchase
         public int TotalPrice { get; set; }
         public string Country { get; set; } = null!;
         public string City { get; set; } = null!;
-        public string Comune { get; set; } = null!;
+        public string Commune { get; set; } = null!;
         public string Street { get; set; } = null!;
         public int UserId { get; set; }
     }

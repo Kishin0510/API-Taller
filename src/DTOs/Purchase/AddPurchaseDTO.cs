@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Api_Taller.src.DTOs.Product;
 
 namespace Api_Taller.src.DTOs.Purchase
 {
@@ -24,7 +25,7 @@ namespace Api_Taller.src.DTOs.Purchase
         [Required]
         [MinLength(1, ErrorMessage = "El nombre de la comuna debe tener al menos 1 caracter.")]
         [MaxLength(64, ErrorMessage = "El nombre de la comuna debe tener a lo más 64 caracteres.")]
-        public string Comune { get; set; } = null!;
+        public string Commune { get; set; } = null!;
 
         [Required]
         [MinLength(1, ErrorMessage = "El nombre de la calle debe tener al menos 1 caracter.")]

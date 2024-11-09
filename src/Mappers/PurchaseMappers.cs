@@ -14,7 +14,6 @@ namespace Api_Taller.src.Mappers
         {
             return new PurchaseDTO
             {
-                Id = purchaseModel.Id,
                 PurchaseDate = purchaseModel.PurchaseDate,
                 TotalPrice = purchaseModel.TotalPrice,
                 UserId = purchaseModel.UserId,

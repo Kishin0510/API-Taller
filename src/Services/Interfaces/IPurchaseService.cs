@@ -9,7 +9,7 @@ namespace Api_Taller.src.Services.Interfaces
     public interface IPurchaseService
     {
         Task<IEnumerable<PurchaseDTO>> GetAllPurchases();
-        Task<int> CreatePurchase(AddPurchaseDTO PurchaseDTO);
+        Task<bool> CreatePurchase(AddPurchaseDTO PurchaseDTO, int userId);
         Task<PurchaseDTO> GetPurchaseById(int id);
     }
 }

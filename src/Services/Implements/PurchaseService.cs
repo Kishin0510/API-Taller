@@ -6,19 +6,43 @@ using Api_Taller.src.DTOs.Purchase;
 using Api_Taller.src.Repositories.Interfaces;
 using Api_Taller.src.Services.Interfaces;
 using Api_Taller.src.Mappers;
+using Api_Taller.src.Repositories;
 
 namespace Api_Taller.src.Services.Implements
 {
     public class PurchaseService : IPurchaseService
     {
         private readonly IPurchaseRepository _purchaseRepository;
-        public PurchaseService(IPurchaseRepository purchaseRepository)
+        private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
+        public PurchaseService(IPurchaseRepository purchaseRepository, IProductRepository productRepository, IUserRepository userRepository)
         {
             _purchaseRepository = purchaseRepository;
+            _productRepository = productRepository;
+            _userRepository = userRepository;
         }
-        public Task<int> CreatePurchase(AddPurchaseDTO PurchaseDTO)
+        public async Task<bool> CreatePurchase(AddPurchaseDTO PurchaseDTO, int userId)
         {
-            throw new NotImplementedException();
+            var purchase = PurchaseDTO.ToPurchaseModel();
+            int totalPrice = 0;
+            var products = await _productRepository.GetProducts();
+            for (int i = 0; i< PurchaseDTO.ProductIds.Count; i++)
+            {
+                var product = products.FirstOrDefault(p => p.Id == PurchaseDTO.ProductIds[i]);
+                if (product != null)
+                {
+                    totalPrice += product.Price * PurchaseDTO.Quantities[i];
+                }
+            }
+            purchase.TotalPrice = totalPrice;
+            var user = await _userRepository.GetUserById(userId);
+            if (user != null)
+            {
+                purchase.User = user;
+                purchase.UserId = user.Id;
+                return await _purchaseRepository.CreatePurchase(purchase);
+            }
+            return false;
         }
 
         public async Task<IEnumerable<PurchaseDTO>> GetAllPurchases()

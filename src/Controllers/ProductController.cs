@@ -18,7 +18,7 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<ProductDTO>> GetProducts()
         {
             var products = _productService.GetProducts();

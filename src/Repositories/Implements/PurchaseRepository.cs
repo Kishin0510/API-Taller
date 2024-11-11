@@ -13,9 +13,11 @@ namespace Api_Taller.src.Repositories.Implements
     public class PurchaseRepository : IPurchaseRepository
     {
         private readonly ApplicationDBContext _context;
-        public PurchaseRepository(ApplicationDBContext context)
+        private readonly IProductRepository _productRepository;
+        public PurchaseRepository(ApplicationDBContext context, IProductRepository productRepository)
         {
             _context = context;
+            _productRepository = productRepository;
         }
 
         public async Task<bool> CreatePurchase(Purchase purchase)
@@ -27,12 +29,12 @@ namespace Api_Taller.src.Repositories.Implements
 
         public async Task<IEnumerable<Purchase>> GetAllPurchases()
         {
-            return await _context.Purchases.Include(p => p.ProductList).Include(p => p.User).ToListAsync();
+            return await _context.Purchases.Include(p => p.User).ToListAsync();
         }
 
         public Task<Purchase?> GetPurchaseById(int id)
         {
-            return _context.Purchases.Include(p => p.ProductList).Include(p => p.User).FirstOrDefaultAsync(p => p.Id == id);
+            return _context.Purchases.Include(p => p.User).FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

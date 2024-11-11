@@ -8,17 +8,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Api_Taller.src.Data.Migrations
+namespace Api_Taller.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241102004222_InitialCrate")]
-    partial class InitialCrate
+    [Migration("20241111205645_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
             modelBuilder.Entity("Api_Taller.src.Models.Gender", b =>
                 {
@@ -57,17 +57,12 @@ namespace Api_Taller.src.Data.Migrations
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PurchaseId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Stock")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductTypeId");
-
-                    b.HasIndex("PurchaseId");
 
                     b.ToTable("Products");
                 });
@@ -102,6 +97,10 @@ namespace Api_Taller.src.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductList")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -195,10 +194,6 @@ namespace Api_Taller.src.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api_Taller.src.Models.Purchase", null)
-                        .WithMany("ProductList")
-                        .HasForeignKey("PurchaseId");
-
                     b.Navigation("ProductType");
                 });
 
@@ -230,11 +225,6 @@ namespace Api_Taller.src.Data.Migrations
                     b.Navigation("Gender");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Api_Taller.src.Models.Purchase", b =>
-                {
-                    b.Navigation("ProductList");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,6 +7,7 @@ using Api_Taller.src.Repositories.Interfaces;
 using Api_Taller.src.Services.Interfaces;
 using Api_Taller.src.Mappers;
 using Api_Taller.src.Repositories;
+using Api_Taller.src.Models;
 
 namespace Api_Taller.src.Services.Implements
 {
@@ -26,15 +27,19 @@ namespace Api_Taller.src.Services.Implements
             var purchase = PurchaseDTO.ToPurchaseModel();
             int totalPrice = 0;
             var products = await _productRepository.GetProducts();
+            List<int> productList = new List<int>();
             for (int i = 0; i< PurchaseDTO.ProductIds.Count; i++)
             {
-                var product = products.FirstOrDefault(p => p.Id == PurchaseDTO.ProductIds[i]);
+                var productId = PurchaseDTO.ProductIds[i];
+                var product = products.FirstOrDefault(p => p.Id == productId);
                 if (product != null)
                 {
                     totalPrice += product.Price * PurchaseDTO.Quantities[i];
+                    productList.Add(product.Id);
                 }
             }
             purchase.TotalPrice = totalPrice;
+            purchase.ProductList = productList;
             var user = await _userRepository.GetUserById(userId);
             if (user != null)
             {
@@ -54,11 +59,7 @@ namespace Api_Taller.src.Services.Implements
         public async Task<PurchaseDTO> GetPurchaseById(int id)
         {
             var purchase = await _purchaseRepository.GetPurchaseById(id);
-            if (purchase == null)
-            {
-                throw new Exception("Compra no encontrada");
-            }
-            return purchase.ToPurchaseDto();
+            return purchase?.ToPurchaseDto();
         }
     }
 }

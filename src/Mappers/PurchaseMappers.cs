@@ -17,7 +17,6 @@ namespace Api_Taller.src.Mappers
                 PurchaseDate = purchaseModel.PurchaseDate,
                 TotalPrice = purchaseModel.TotalPrice,
                 UserId = purchaseModel.UserId,
-                ProductList = purchaseModel.ProductList.Select(p => p.ToProductDTO()).ToList(),
                 Country = purchaseModel.Country,
                 City = purchaseModel.City,
                 Commune = purchaseModel.Commune,
@@ -30,7 +29,6 @@ namespace Api_Taller.src.Mappers
             return new Purchase
             {
                 PurchaseDate = DateTime.Now,
-                ProductList = addpurchaseDTO.ProductIds.Select(id => new Product { Id = id }).ToList(),
                 Country = addpurchaseDTO.Country,
                 City = addpurchaseDTO.City,
                 Commune = addpurchaseDTO.Commune,

@@ -14,6 +14,7 @@ namespace Api_Taller.src.Mappers
         {
             return new PurchaseDTO
             {
+                Id = purchaseModel.Id,
                 PurchaseDate = purchaseModel.PurchaseDate,
                 TotalPrice = purchaseModel.TotalPrice,
                 UserId = purchaseModel.UserId,
@@ -21,7 +22,11 @@ namespace Api_Taller.src.Mappers
                 City = purchaseModel.City,
                 Commune = purchaseModel.Commune,
                 Street = purchaseModel.Street,
-                Quantities = purchaseModel.Quantities
+                PurchaseProducts = purchaseModel.PurchaseProducts.Select(p => new PurchaseProductDTO
+                {
+                    ProductId = p.ProductId,
+                    Quantity = p.Quantity
+                }).ToList()
             };
         }
         public static Purchase ToPurchaseModel(this AddPurchaseDTO addpurchaseDTO)
@@ -33,7 +38,6 @@ namespace Api_Taller.src.Mappers
                 City = addpurchaseDTO.City,
                 Commune = addpurchaseDTO.Commune,
                 Street = addpurchaseDTO.Street,
-                Quantities = addpurchaseDTO.Quantities
             };
         }
     }

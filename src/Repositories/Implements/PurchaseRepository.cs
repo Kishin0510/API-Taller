@@ -29,12 +29,12 @@ namespace Api_Taller.src.Repositories.Implements
 
         public async Task<IEnumerable<Purchase>> GetAllPurchases()
         {
-            return await _context.Purchases.Include(p => p.User).ToListAsync();
+            return await _context.Purchases.Include(p => p.User).Include(p => p.PurchaseProducts).ThenInclude(pp => pp.Product).ToListAsync();
         }
 
         public Task<Purchase?> GetPurchaseById(int id)
         {
-            return _context.Purchases.Include(p => p.User).FirstOrDefaultAsync(p => p.Id == id);
+            return _context.Purchases.Include(p => p.User).Include(p => p.PurchaseProducts).ThenInclude(pp => pp.Product).FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

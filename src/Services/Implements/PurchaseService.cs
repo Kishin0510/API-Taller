@@ -22,29 +22,38 @@ namespace Api_Taller.src.Services.Implements
             _productRepository = productRepository;
             _userRepository = userRepository;
         }
-        public async Task<bool> CreatePurchase(AddPurchaseDTO PurchaseDTO, int userId)
+       public async Task<bool> CreatePurchase(AddPurchaseDTO AddPurchaseDTO, int userId)
         {
-            var purchase = PurchaseDTO.ToPurchaseModel();
+            var purchase = AddPurchaseDTO.ToPurchaseModel();
             int totalPrice = 0;
             var products = await _productRepository.GetProducts();
-            List<int> productList = new List<int>();
-            for (int i = 0; i< PurchaseDTO.ProductIds.Count; i++)
+            List<PurchaseProduct> productList = new List<PurchaseProduct>();
+            for (int i = 0; i< AddPurchaseDTO.ProductIds.Count; i++)
             {
-                var productId = PurchaseDTO.ProductIds[i];
+                var productId = AddPurchaseDTO.ProductIds[i];
+                var quantity = AddPurchaseDTO.Quantities[i];
                 var product = products.FirstOrDefault(p => p.Id == productId);
                 if (product != null)
                 {
-                    totalPrice += product.Price * PurchaseDTO.Quantities[i];
-                    productList.Add(product.Id);
+                    totalPrice += product.Price * quantity;
+                    productList.Add(new PurchaseProduct
+                    {
+                        ProductId = productId,
+                        Quantity = quantity,
+                        Product = product,
+                        Purchase = purchase,
+                        PurchaseId = purchase.Id
+                    });
                 }
             }
+        
             purchase.TotalPrice = totalPrice;
-            purchase.ProductList = productList;
             var user = await _userRepository.GetUserById(userId);
             if (user != null)
             {
                 purchase.User = user;
                 purchase.UserId = user.Id;
+                purchase.PurchaseProducts = productList;
                 return await _purchaseRepository.CreatePurchase(purchase);
             }
             return false;

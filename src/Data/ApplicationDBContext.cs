@@ -15,6 +15,6 @@ namespace Api_Taller.src.Data
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<Purchase> Purchases { get; set; } = null!;
-
+        public DbSet<PurchaseProduct> PurchaseProducts { get; set; } = null!;
     }
 }

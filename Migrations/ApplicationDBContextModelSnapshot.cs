@@ -97,15 +97,7 @@ namespace Api_Taller.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ProductList")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Quantities")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Street")
@@ -123,6 +115,30 @@ namespace Api_Taller.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("Api_Taller.src.Models.PurchaseProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("PurchaseProducts");
                 });
 
             modelBuilder.Entity("Api_Taller.src.Models.Role", b =>
@@ -205,6 +221,25 @@ namespace Api_Taller.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Api_Taller.src.Models.PurchaseProduct", b =>
+                {
+                    b.HasOne("Api_Taller.src.Models.Product", "Product")
+                        .WithMany("PurchaseProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api_Taller.src.Models.Purchase", "Purchase")
+                        .WithMany("PurchaseProducts")
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Purchase");
+                });
+
             modelBuilder.Entity("Api_Taller.src.Models.User", b =>
                 {
                     b.HasOne("Api_Taller.src.Models.Gender", "Gender")
@@ -222,6 +257,16 @@ namespace Api_Taller.Migrations
                     b.Navigation("Gender");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Api_Taller.src.Models.Product", b =>
+                {
+                    b.Navigation("PurchaseProducts");
+                });
+
+            modelBuilder.Entity("Api_Taller.src.Models.Purchase", b =>
+                {
+                    b.Navigation("PurchaseProducts");
                 });
 #pragma warning restore 612, 618
         }

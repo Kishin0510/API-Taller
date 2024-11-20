@@ -113,8 +113,6 @@ namespace Api_Taller.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PurchaseDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Quantities = table.Column<string>(type: "TEXT", nullable: false),
-                    ProductList = table.Column<string>(type: "TEXT", nullable: false),
                     TotalPrice = table.Column<int>(type: "INTEGER", nullable: false),
                     Country = table.Column<string>(type: "TEXT", nullable: false),
                     City = table.Column<string>(type: "TEXT", nullable: false),
@@ -133,10 +131,47 @@ namespace Api_Taller.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PurchaseProducts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PurchaseId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchaseProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PurchaseProducts_Purchases_PurchaseId",
+                        column: x => x.PurchaseId,
+                        principalTable: "Purchases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductTypeId",
                 table: "Products",
                 column: "ProductTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseProducts_ProductId",
+                table: "PurchaseProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseProducts_PurchaseId",
+                table: "PurchaseProducts",
+                column: "PurchaseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_UserId",
@@ -157,6 +192,9 @@ namespace Api_Taller.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "PurchaseProducts");
+
             migrationBuilder.DropTable(
                 name: "Products");
 

@@ -57,7 +57,7 @@ namespace Api_Taller.src.Controllers
             return Ok(purchase);
         }
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "User")]
         public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetAllPurchases()
         {
             var purchases = await _purchaseService.GetAllPurchases();

@@ -25,14 +25,13 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<string>> CreatePurchase([FromBody] AddPurchaseDTO purchaseDTO)
         {
-            //var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var userIdClaim = "1";
-            if (userIdClaim != null)
+            var userIdToken = User.FindFirst("Id")?.Value;
+            if (userIdToken != null)
             {
-                if (int.TryParse(userIdClaim, out var userId))
+                if (int.TryParse(userIdToken, out var userId))
                 {
                     var valor = await _purchaseService.CreatePurchase(purchaseDTO, userId);
                     if (valor)
@@ -46,7 +45,7 @@ namespace Api_Taller.src.Controllers
             return BadRequest("Error al realizar la compra");
         }
         [HttpGet("{id}")]
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<PurchaseDTO>> GetPurchaseById(int id)
         {
             var purchase = await _purchaseService.GetPurchaseById(id);
@@ -57,7 +56,7 @@ namespace Api_Taller.src.Controllers
             return Ok(purchase);
         }
         [HttpGet]
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetAllPurchases()
         {
             var purchases = await _purchaseService.GetAllPurchases();

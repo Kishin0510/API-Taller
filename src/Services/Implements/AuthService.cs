@@ -30,6 +30,7 @@ namespace Api_Taller.src.Services.Implements
         {
             var claims = new List<Claim>{
                 new ("Id", user.Id.ToString()),
+                new ("Name", user.Name),
                 new ("Email", user.Email),
                 new (ClaimTypes.Role, user.Role.Name)
             };
@@ -40,7 +41,7 @@ namespace Api_Taller.src.Services.Implements
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddHours(2),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds
             );
 

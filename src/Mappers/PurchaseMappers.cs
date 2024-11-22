@@ -38,6 +38,7 @@ namespace Api_Taller.src.Mappers
                 City = addpurchaseDTO.City,
                 Commune = addpurchaseDTO.Commune,
                 Street = addpurchaseDTO.Street,
+                
             };
         }
     }

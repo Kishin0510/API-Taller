@@ -20,5 +20,7 @@ namespace Api_Taller.src.Services.Interfaces
         Task<IEnumerable<UserDTO>> SearchUsers(string query, int pageNum, int pageSize);
 
         Task<bool> ChangeUserState(int id, bool newUserState);  
+
+        Task<bool> DeleteUser(int id);
     }
 }

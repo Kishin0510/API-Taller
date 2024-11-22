@@ -30,5 +30,7 @@ namespace Api_Taller.src.Repositories.Interfaces
         Task<bool> ChangeUserState(int id, bool newUserState);
 
         Task<bool> ChangePassword(int id, string newPassword);
+
+        Task<bool> DeleteUser(int id);
     }
 }

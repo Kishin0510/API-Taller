@@ -101,5 +101,28 @@ namespace Api_Taller.src.Controllers
             }
             return Ok(user);
         }
+
+        [HttpDelete("delete/{id}")]
+        [Authorize (Roles = "User")]
+        public async Task<ActionResult<string>> DeleteUser(int id)
+        {
+            try {
+                var idClaim = User.Claims.FirstOrDefault(claim => claim.Type == "Id");
+                if(idClaim != null && int.Parse(idClaim.Value) != id)
+                {
+                    return Unauthorized("No puedes elimiar la cuenta de otro usuario");
+                }
+                var result = await _userService.DeleteUser(id);
+                if (!result)
+                {
+                    return BadRequest("No se pudo eliminar el usuario");
+                }
+                return Ok("Usuario eliminado con éxito");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

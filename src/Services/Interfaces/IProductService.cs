@@ -9,7 +9,7 @@ namespace Api_Taller.src.Services.Interfaces
 
         Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize);
 
-        Task<IEnumerable<ProductDTO>> SearchProducts(string query);
+        Task<IEnumerable<ProductDTO>> SearchProducts(string query, int pageNum, int pageSize);
 
         Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query, string order);
 

@@ -17,11 +17,11 @@ namespace Api_Taller.src.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
+        [HttpGet("search/{pageNum}/{pageSize}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult<IEnumerable<ProductDTO>> GetProducts()
+        public ActionResult<IEnumerable<ProductDTO>> GetProducts([FromQuery] string? query, int pageNum, int pageSize)
         {
-            var products = _productService.GetProducts();
+            var products = _productService.SearchProducts(query, pageNum, pageSize);
             return Ok(products);
         }
 
@@ -83,5 +83,7 @@ namespace Api_Taller.src.Controllers
             var products = _productService.SearchAvailableProducts(query, order);
             return Ok(products);
         }
+
+
     }
 }

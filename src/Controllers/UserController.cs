@@ -30,7 +30,11 @@ namespace Api_Taller.src.Controllers
         public async Task<ActionResult<string>> ChangePassword (int id, [FromBody] ChangePasswordDTO changePasswordDto)
         {
             try
-            {
+            {   var idClaim = User.Claims.FirstOrDefault(claim => claim.Type == "Id");
+                if (idClaim != null && int.Parse(idClaim.Value) != id)
+                {
+                    return Unauthorized("No puedes cambiar la contraseña de otro usuario");
+                }
                 var result = await _userService.ChangeUserPassword(id, changePasswordDto);
                 if (!result) {
                     return BadRequest("No se pudo cambiar la contraseña");
@@ -64,10 +68,15 @@ namespace Api_Taller.src.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult<string>> EditUser(int id, [FromBody] EditUserDTO editUserDTO)
         {
             try {
+                var idClaim = User.Claims.FirstOrDefault(claim => claim.Type == "Id");
+                if(idClaim != null && int.Parse(idClaim.Value) != id)
+                {
+                    return Unauthorized("No puedes editar la información de otro usuario");
+                }
                 var result = await _userService.EditUserInfo(id, editUserDTO);
                 if (!result)
                 {
@@ -81,24 +90,16 @@ namespace Api_Taller.src.Controllers
             }
         }
 
-        [HttpGet("search")]
+        [HttpGet("search/{pageNum}/{pageSize}")]
         [Authorize (Roles = "Admin")]
-        public ActionResult<IEnumerable<UserDTO>> SearchUsers([FromQuery] string query)
+        public ActionResult<IEnumerable<UserDTO>> SearchUsers([FromQuery] string? query,int pageNum, int pageSize)
         {
-            var user = _userService.SearchUsers(query);
+            var user = _userService.SearchUsers(query, pageNum, pageSize);
             if (user == null)
             {
                 return BadRequest("Usuario no encontrado");
             }
             return Ok(user);
         }
-
-        [HttpGet("genders")]
-        public  ActionResult<IEnumerable<Gender>> GetGender()
-        {
-            var genders = _userService.GetGenders();
-            return Ok(genders);
-        }
-
     }
 }

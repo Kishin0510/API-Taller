@@ -82,10 +82,10 @@ namespace Api_Taller.src.Services.Implements
             return users;
         }
 
-        public async Task<IEnumerable<UserDTO>> SearchUsers(string query)
+        public async Task<IEnumerable<UserDTO>> SearchUsers(string query, int pageNum, int pageSize)
         {
             var users = await _userRepository.SearchUsers(query);
-            var UserDTO = users.Select(u => UserMappers.ToUserDTO(u));
+            var UserDTO = users.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(u => UserMappers.ToUserDTO(u));
             return UserDTO;
         }
     }

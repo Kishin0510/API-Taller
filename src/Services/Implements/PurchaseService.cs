@@ -59,16 +59,22 @@ namespace Api_Taller.src.Services.Implements
             return false;
         }
 
-        public async Task<IEnumerable<PurchaseDTO>> GetAllPurchases()
+        public async Task<IEnumerable<PurchaseDTO>> GetAllPurchases(int pagNum, int pageSize)
         {
             var purchases = await _purchaseRepository.GetAllPurchases();
-            return purchases.Select(p => p.ToPurchaseDto());
+            return purchases.Skip((pagNum - 1) * pageSize).Take(pageSize).Select(p => p.ToPurchaseDto());
         }
 
-        public async Task<PurchaseDTO> GetPurchaseById(int id)
+        public async Task<IEnumerable<PurchaseDTO>> GetPurchaseById(int id)
         {
             var purchase = await _purchaseRepository.GetPurchaseById(id);
-            return purchase?.ToPurchaseDto();
+            return purchase.Select(p => p.ToPurchaseDto());
+        }
+
+        public async Task<IEnumerable<PurchaseDTO>> SearchPurchases(string? nameQuery, string? dateQuery)
+        {
+            var purchases = await _purchaseRepository.SearchPurchases(nameQuery, dateQuery);
+            return purchases.Select(p => p.ToPurchaseDto());
         }
     }
 }

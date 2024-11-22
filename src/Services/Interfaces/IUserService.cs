@@ -17,7 +17,7 @@ namespace Api_Taller.src.Services.Interfaces
 
         Task<IEnumerable<Gender>> GetGenders();
 
-        Task<IEnumerable<UserDTO>> SearchUsers(string query);
+        Task<IEnumerable<UserDTO>> SearchUsers(string query, int pageNum, int pageSize);
 
         Task<bool> ChangeUserState(int id, bool newUserState);  
     }

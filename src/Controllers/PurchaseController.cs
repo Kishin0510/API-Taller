@@ -46,20 +46,33 @@ namespace Api_Taller.src.Controllers
         }
         [HttpGet("{id}")]
         [Authorize(Roles = "User")]
-        public async Task<ActionResult<PurchaseDTO>> GetPurchaseById(int id)
+        public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetPurchaseById(int id)
         {
+            var idClaim = User.Claims.FirstOrDefault(claim => claim.Type == "Id");
+            if (idClaim != null && int.Parse(idClaim.Value) != id)
+            {
+                return Unauthorized("No puedes ver las compras de otro usuario");
+            }
             var purchase = await _purchaseService.GetPurchaseById(id);
             if (purchase == null)
             {
-                return NotFound("Compra no encontrada");
+                return NotFound("Compras no encontradas");
             }
             return Ok(purchase);
         }
-        [HttpGet]
+        [HttpGet("{pageNum}/{pageSize}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetAllPurchases()
+        public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetAllPurchases(int pageNum, int pageSize)
         {
-            var purchases = await _purchaseService.GetAllPurchases();
+            var purchases = await _purchaseService.GetAllPurchases(pageNum, pageSize);
+            return Ok(purchases);
+        }
+
+        [HttpGet("search")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<PurchaseDTO>>> SearchPurchases([FromQuery] string name, [FromQuery] string date)
+        {
+            var purchases = await _purchaseService.SearchPurchases(name, date);
             return Ok(purchases);
         }
     }

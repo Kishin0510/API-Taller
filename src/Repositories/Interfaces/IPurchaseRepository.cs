@@ -10,7 +10,9 @@ namespace Api_Taller.src.Repositories.Interfaces
     {
         Task<IEnumerable<Purchase>> GetAllPurchases();
         Task<bool> CreatePurchase(Purchase purchase);
-        Task<Purchase?> GetPurchaseById(int id);
+        Task<IEnumerable<Purchase>> GetPurchaseById(int id);
+
+        Task<IEnumerable<Purchase>> SearchPurchases(String nameQuery, string dateQuery);
         
     }
 }

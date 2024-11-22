@@ -32,9 +32,32 @@ namespace Api_Taller.src.Repositories.Implements
             return await _context.Purchases.Include(p => p.User).Include(p => p.PurchaseProducts).ThenInclude(pp => pp.Product).ToListAsync();
         }
 
-        public Task<Purchase?> GetPurchaseById(int id)
+        public async Task<IEnumerable<Purchase>> GetPurchaseById(int id)
         {
-            return _context.Purchases.Include(p => p.User).Include(p => p.PurchaseProducts).ThenInclude(pp => pp.Product).FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Purchases
+            .Include(p => p.User)
+            .Include(p => p.PurchaseProducts)
+            .ThenInclude(pp => pp.Product)
+            .Where(p => p.UserId == id)
+            .OrderBy(p => p.PurchaseDate)
+            .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Purchase>> SearchPurchases(string? nameQuery, string? dateQuery)
+        {
+            var purchases = await _context.Purchases.Include(p => p.User).Include(p => p.PurchaseProducts).ThenInclude(pp => pp.Product).ToListAsync();
+
+            if (!string.IsNullOrEmpty(nameQuery))
+            {
+                purchases = purchases.Where(p => p.User.Name.Contains(nameQuery)).ToList();
+            }
+            if (!string.IsNullOrEmpty(dateQuery))
+            {
+                purchases = purchases.Where(p => p.PurchaseDate.ToString().Contains(dateQuery)).ToList();
+            }
+            purchases = purchases.OrderBy(p => p.PurchaseDate).ToList();
+
+            return purchases;
         }
     }
 }

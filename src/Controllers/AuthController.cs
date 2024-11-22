@@ -14,6 +14,13 @@ namespace Api_Taller.src.Controllers
         {
             _authService = authService;
         }
+
+        /// <summary>
+        /// Registrar un nuevo usuario.
+        /// </summary>
+        /// <param name="registerUserDto">Los datos para registrarse. </param>
+        /// <returns>Un mensaje de confirmación. </returns>
+        
         [HttpPost("register")]
         public async Task<ActionResult<LoggedUserDTO>> RegisterUser(RegisterUserDTO registerUserDto)
         {   
@@ -26,6 +33,11 @@ namespace Api_Taller.src.Controllers
             }
         }
 
+        /// <summary>
+        /// Inicia sesión un usuario existente.
+        /// </summary>
+        /// <param name="loginUserDto">Los datos de inicio de sesión</param>
+        /// <returns>Los datos del usuario que inició sesión. </returns>
         [HttpPost("login")]
         public async Task<ActionResult<LoggedUserDTO>> Login(LoginUserDTO loginUserDto)
         {

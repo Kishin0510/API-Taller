@@ -7,7 +7,14 @@ namespace Api_Taller.src.DTOs.Purchase
 {
     public class PurchaseProductDTO
     {
+        /// <summary>
+        /// Id del producto.
+        /// </summary>
         public int ProductId { get; set; }
+
+        /// <summary>
+        /// Cantidad del producto.
+        /// </summary>
         public int Quantity { get; set; }
     }
 }

@@ -1,16 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Api_Taller.src.DTOs.Product;
 using Api_Taller.src.DTOs.Purchase;
-using Api_Taller.src.DTOs.User;
 using Api_Taller.src.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using SQLitePCL;
 
 namespace Api_Taller.src.Controllers
 {
@@ -24,6 +15,11 @@ namespace Api_Taller.src.Controllers
             _purchaseService = purchaseService;
         }
 
+        /// <summary>
+        /// Crea una boleta de compra. 
+        /// </summary>
+        /// <param name="purchaseDTO">La información de la compra. </param>
+        /// <returns>Un mensaje de confirmación. </returns>
         [HttpPost]
         [Authorize(Roles = "User")]
         public async Task<ActionResult<string>> CreatePurchase([FromBody] AddPurchaseDTO purchaseDTO)
@@ -44,6 +40,12 @@ namespace Api_Taller.src.Controllers
             }
             return BadRequest("Error al realizar la compra");
         }
+
+        /// <summary>
+        /// Obtiene las compras del usuario. 
+        /// </summary>
+        /// <param name="id">La id del usuario. </param>
+        /// <returns>Lista de compras del usuario. </returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "User")]
         public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetPurchaseById(int id)
@@ -60,6 +62,13 @@ namespace Api_Taller.src.Controllers
             }
             return Ok(purchase);
         }
+
+        /// <summary>
+        /// Obtiene todas las compras con posibilidad de paginar los resultados.
+        /// </summary>
+        /// <param name="pageNum">El número de la página. </param>
+        /// <param name="pageSize">El tamaño de la página. </param>
+        /// <returns>Una lista con las compras. </returns>
         [HttpGet("{pageNum}/{pageSize}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetAllPurchases(int pageNum, int pageSize)
@@ -68,6 +77,12 @@ namespace Api_Taller.src.Controllers
             return Ok(purchases);
         }
 
+        /// <summary>
+        /// Busca compras por nombre y fecha.
+        /// </summary>
+        /// <param name="name">Nombre de usuario a buscar. </param>
+        /// <param name="date">La fecha a buscar. </param>
+        /// <returns></returns>
         [HttpGet("search")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<PurchaseDTO>>> SearchPurchases([FromQuery] string name, [FromQuery] string date)

@@ -5,6 +5,7 @@ using Api_Taller.src.Repositories.Interfaces;
 using Api_Taller.src.DTOs.Product;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Bogus.DataSets;
 
 namespace Api_Taller.src.Services.Implements
 {
@@ -206,17 +207,29 @@ namespace Api_Taller.src.Services.Implements
         public async Task<IEnumerable<ProductDTO>> SearchProducts(string query, int pageNum, int pageSize)
         {
             var products = await _productRepository.GetProducts();
-            if (query == null || query == "")
+            var productTask = products.Select(async p => 
+                                        {
+                                            p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+                                            return p;
+                                        }).ToList();
+            var updateProduct = await Task.WhenAll(productTask);
+            if (!string.IsNullOrEmpty(query))
             {
-                return products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(p => p.ToProductDTO());
+                var productDTOquery = updateProduct.Where(p => p.Id.ToString().Contains(query)
+                                            || p.Name.Contains(query)
+                                            || p.Price.ToString().Contains(query)
+                                            || p.Stock.ToString().Contains(query)
+                                            || p.ProductType.Type.Contains(query))
+                                      .Skip((pageNum - 1) * pageSize)
+                                      .Take(pageSize)
+                                      .Select(p => p.ToProductDTO())
+                                      .ToList();
+                return productDTOquery;
             }
-            var productDTOs = products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(async p => 
-            {
-                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
-                return p.ToProductDTO();
-            }).ToList();
+            var productDTOs = updateProduct.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+            
 
-            return await Task.WhenAll(productDTOs);
+            return productDTOs.Select(p => p.ToProductDTO());
         }
     }
 }

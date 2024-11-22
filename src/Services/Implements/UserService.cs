@@ -60,6 +60,12 @@ namespace Api_Taller.src.Services.Implements
             return result;
         }
 
+        public Task<bool> DeleteUser(int id)
+        {
+            var result = _userRepository.DeleteUser(id);
+            return result;
+        }
+
         public Task<bool> EditUserInfo(int id, EditUserDTO editUserDto)
         {
             if(editUserDto.GenderId != null && !_genderRepository.ValidGenderId((int)editUserDto.GenderId).Result)

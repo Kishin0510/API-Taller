@@ -17,6 +17,13 @@ namespace Api_Taller.src.Controllers
             _productService = productService;
         }
 
+        /// <summary>
+        /// Obtiene los productos con posiblidad de filtrar y paginar los resultados.
+        /// </summary>
+        /// <param name="query">La query de busqueda. </param>
+        /// <param name="pageNum">El numero de la página. </param>
+        /// <param name="pageSize">El tamaño de la página</param>
+        /// <returns>Una lista con los productos. </returns>
         [HttpGet("search/{pageNum}/{pageSize}")]
         [Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<ProductDTO>> GetProducts([FromQuery] string? query, int pageNum, int pageSize)
@@ -25,14 +32,29 @@ namespace Api_Taller.src.Controllers
             return Ok(products);
         }
 
+        /// <summary>
+        /// Obtiene los productos disponibles con posiblidad de paginar los resultados.
+        /// </summary>
+        /// <param name="pageNum">El número de la página. </param>
+        /// <param name="pageSize">El tamaño de la página. </param>
+        /// <returns>Una lista con los productos. </returns>
         [HttpGet("available/{pageNum}/{pageSize}")]
         [Authorize(Roles = "User")]
         public ActionResult<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
         {
-            var products = _productService.GetAvailableProducts(pageNum, pageSize);
-            return Ok(products);
+            try {
+                var products = _productService.GetAvailableProducts(pageNum, pageSize);
+                return Ok(products);
+            } catch (Exception e) {
+                return BadRequest(e.Message);
+            }
         }
 
+        /// <summary>
+        /// Añadir un producto. 
+        /// </summary>
+        /// <param name="addProductDTO">La información del producto a añadir. </param>
+        /// <returns>Un mensaje de confirmación. </returns>
         [HttpPost]
         [Consumes("multipart/form-data")]
         [Authorize(Roles = "Admin")]
@@ -48,6 +70,12 @@ namespace Api_Taller.src.Controllers
             }
         }	
 
+        /// <summary>
+        /// Editar un producto.
+        /// </summary>
+        /// <param name="id">La id del producto a editar. </param>
+        /// <param name="editProductDTO">La información a editar del producto. </param>
+        /// <returns>Un mensaje de confirmación. </returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<string>> EditProduct(int id, [FromForm] EditProductDTO editProductDTO)
@@ -62,6 +90,11 @@ namespace Api_Taller.src.Controllers
             }
         }
 
+        /// <summary>
+        /// Eliminar un producto. 
+        /// </summary>
+        /// <param name="id">La id del producto a editar. </param>
+        /// <returns>Un mensaje de confirmación. </returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]   
         public async Task<ActionResult<string>> DeleteProduct(int id)
@@ -76,6 +109,12 @@ namespace Api_Taller.src.Controllers
             }
         }
 
+        /// <summary>
+        /// Buscar productos disponibles con una query y orden de los datos.
+        /// </summary>
+        /// <param name="query">La query de búsqueda. </param>
+        /// <param name="order">El orden de los productos (asc o desc)</param>
+        /// <returns>Lista de productos. </returns>
         [HttpGet("available/search")]
         [Authorize(Roles = "User")]
         public ActionResult<IEnumerable<ProductDTO>> SearchAvailableProducts([FromQuery] string query, [FromQuery] string order)

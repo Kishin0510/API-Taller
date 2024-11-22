@@ -1,0 +1,730 @@
+{
+	"info": {
+		"_postman_id": "003f9087-ec55-4265-85c4-cdc23c9dfb49",
+		"name": "Taller IDWM",
+		"description": "Dentro de cada carpeta existe una breve explicación de cada endopoint.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27393212"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@idwm.cl\",\r\n    \"password\":\"P4ssw0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rut\":\"19952185-3\",\r\n    \"name\":\"Nicolas Tapia\",\r\n    \"birthday\":\"17-12-98\",\r\n    \"Email\":\"prueba@correo.com\",\r\n    \"GenderId\":\"1\",\r\n    \"password\":\"c0ntr4s3ñ4\",\r\n    \"ConfirmPassword\":\"c0ntr4s3ñ4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**Login:** Iniciar sesión (En el ejemplo el admin).\n\n**Register**: Se registra un usuario nuevo."
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Search Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzY4MTY4fQ.WUzlj4ngXxgmcEFzWdIF-o5s0GivKrOgycKJzW15wPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/user/search/1/2?query=Nico",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"user",
+								"search",
+								"1",
+								"2"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Nico"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzY4MTY4fQ.WUzlj4ngXxgmcEFzWdIF-o5s0GivKrOgycKJzW15wPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIiLCJOYW1lIjoiTmljb2xhcyBUYXBpYSIsIkVtYWlsIjoicHJ1ZWJhQGNvcnJlby5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzMyMzI1NTg3fQ.oq2r7siEUsOzJc7yZMAWgNF0VbT2Or30FWeEXnZao3k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Nicolas Carrasco\",\r\n    \"birthday\":\"25/10/2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/user/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change state",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJFbWFpbCI6ImFkbWluQGlkd20uY2wiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTczMDY2Njc1OX0.yB_Ujh8F7n4hVAkpGnjbji4UJmKV5-P_GMJlhdVmIKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"false\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/user/2/state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"user",
+								"2",
+								"state"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzI1NjgxfQ.d6BRU-K5QwZPr7ff2lq3kwV9z1UrBpJtQNhtbnjX8YY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldpassword\":\"c0ntr4s3ñ4\",\r\n    \"newpassword\":\"holaqtal1\",\r\n    \"Confirmnewpassword\":\"holaqtal1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/user/2/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"user",
+								"2",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIiLCJOYW1lIjoiTmljb2xhcyBDYXJyYXNjbyIsIkVtYWlsIjoicHJ1ZWJhQGNvcnJlby5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzMyMzY3OTc0fQ.tLRiNZRxu458VHn_0y1GIEyFkN88G6ckyy9E6GJPVcc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/user/delete/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"user",
+								"delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**Search Users**: Busca a con query a uno o más usuarios.\n\n**Get Users:** Busca a todos los usuarios.\n\n**Edit User**: Se cambian los datos del usuario (En el ejemplo se utiliza el usuario en registrer).\n\n**Change State**: Se cambia el estado del usuario.\n\n**Change Password:** Se cambia la contraseña del usuario (En el ejemplo se utiliza al usuario en register).\n\n**Delete User:** El usuario puede eliminar su propia cuenta."
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get Available Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIiLCJOYW1lIjoiTmljb2xhcyBDYXJyYXNjbyIsIkVtYWlsIjoicHJ1ZWJhQGNvcnJlby5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzMyMzI2MDUzfQ.K56v9jwG3WsCMgtC6GHwt6pT0ReCwLxB-qrXoxVUj7M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/product/available/2/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"product",
+								"available",
+								"2",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzY4MTY4fQ.WUzlj4ngXxgmcEFzWdIF-o5s0GivKrOgycKJzW15wPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/product/search/1/50?query=Alimen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"product",
+								"search",
+								"1",
+								"50"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Alimen"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Available Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIiLCJFbWFpbCI6InBydWViYUBjb3JyZW8uY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTczMTI3NTE1MH0.XkIhG6aBHM7WzDIuYj2vXfVfCo3Cu514Vxo-qQtPKxg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/product/available/search?query=Alimentación&order=asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"product",
+								"available",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Alimentación"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzY4MTY4fQ.WUzlj4ngXxgmcEFzWdIF-o5s0GivKrOgycKJzW15wPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "Salchichas",
+									"type": "text"
+								},
+								{
+									"key": "Price",
+									"value": "1990",
+									"type": "text"
+								},
+								{
+									"key": "Stock",
+									"value": "250",
+									"type": "text"
+								},
+								{
+									"key": "Image",
+									"type": "file",
+									"src": "/C:/Users/NicoK/OneDrive/Público/Fotos/1920x1080-px-Citadel-Mass-Effect-city-concept-art-futuristic-Mass-Effect-3-672316-wallhere.com.jpg"
+								},
+								{
+									"key": "ProductTypeId",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzY4MTY4fQ.WUzlj4ngXxgmcEFzWdIF-o5s0GivKrOgycKJzW15wPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "Smart TV Samsung",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Price",
+									"value": "450000",
+									"type": "text"
+								},
+								{
+									"key": "Stock",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "Image",
+									"type": "file",
+									"src": "postman-cloud:///1ef16d86-f698-4cb0-8358-6032b8bd7d25",
+									"disabled": true
+								},
+								{
+									"key": "ProductTypeId",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/product/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"product",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJFbWFpbCI6ImlnbmFjaW8ubWFuY2lsbGFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MTYyMzcyNzh9.tA963bILFz4hlagmUwN81_bekTxOWrbno8gZJMSrN8c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/product/20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"product",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**Get Available Products**: Los usuarios pueden obtener los productos disponibles.\n\n**Search Products:** El admin puede hacer una query de los productos.\n\n**Search Available Products**: Los usuarios pueden hacer una query de los productos disponibles.\n\n**Add Product**: El admin crea un nuevo producto.\n\n**Edit Product**: El admin edita un producto.\n\n**Delete Product**: El admin elimina un producto."
+		},
+		{
+			"name": "Purchase",
+			"item": [
+				{
+					"name": "Get User's Purchases",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIiLCJOYW1lIjoiTmljb2xhcyBDYXJyYXNjbyIsIkVtYWlsIjoicHJ1ZWJhQGNvcnJlby5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzMyMzY2MzE3fQ.SouKaMhjMbRNFVFEJHZIBP0Ne0JqKM5m_qWUDv0x_Sg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/purchase/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"purchase",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchases",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzIxNjMwfQ.eMXsXe-1b4MXjRoO-NDq-l_JM1kifxwaToD50DMvWaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/purchase/1/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"purchase",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Purchases",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJOYW1lIjoiSWduYWNpbyBNYW5jaWxsYSIsIkVtYWlsIjoiYWRtaW5AaWR3bS5jbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyMzY1MDk2fQ.ozjiSBBzdU33c67YM5Cnqfty2tN45uZ3lnxKjHZGeo4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5252/api/purchase/search?name=N&date=2024",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"purchase",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "N"
+								},
+								{
+									"key": "date",
+									"value": "2024"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchase Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIiLCJOYW1lIjoiTmljb2xhcyBUYXBpYSIsIkVtYWlsIjoicHJ1ZWJhQGNvcnJlby5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzMyMzIxNDMwfQ.ZT8zrNkpVeaJqR0CdWGgh3ka89m-zqt718S4GBknNvM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProductIds\" : [2, 6, 7],\r\n    \"Quantities\" : [3, 1, 6],\r\n    \"Country\" : \"Chile\",\r\n    \"City\": \"Antofagasta\",\r\n    \"Commune\" : \"Antofagasta\",\r\n    \"Street\" : \"Virgilio Arias\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5252/api/purchase",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5252",
+							"path": [
+								"api",
+								"purchase"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**Get User's Purchases:** Los usuarios obtienen sus propias boletas.\n\n**GetPurchases**: El admin obtiene todas las boletas.\n\n**Search Purchase:** El admin busca boletas con una query.\n\n**Purchase Product**: Un usuario compra y obtiene su boleta."
+		}
+	]
+}

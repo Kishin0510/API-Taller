@@ -53,6 +53,18 @@ namespace Api_Taller.src.Repositories.Implements
             return true;
         }
 
+        public async Task<bool> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if(user == null)
+            {
+                return false;
+            }
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<bool> EditUser(int id, EditUserDTO user)
         {
             var oldUser = await _context.Users.FindAsync(id);

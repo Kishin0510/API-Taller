@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Api_Taller.src.Data.Migrations
+namespace Api_Taller.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCrate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,30 @@ namespace Api_Taller.src.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<int>(type: "INTEGER", nullable: false),
+                    Stock = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageId = table.Column<string>(type: "TEXT", nullable: true),
+                    ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_ProductTypes_ProductTypeId",
+                        column: x => x.ProductTypeId,
+                        principalTable: "ProductTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -89,7 +113,6 @@ namespace Api_Taller.src.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PurchaseDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Quantities = table.Column<string>(type: "TEXT", nullable: false),
                     TotalPrice = table.Column<int>(type: "INTEGER", nullable: false),
                     Country = table.Column<string>(type: "TEXT", nullable: false),
                     City = table.Column<string>(type: "TEXT", nullable: false),
@@ -109,33 +132,30 @@ namespace Api_Taller.src.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "PurchaseProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Price = table.Column<int>(type: "INTEGER", nullable: false),
-                    Stock = table.Column<int>(type: "INTEGER", nullable: false),
-                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
-                    ImageId = table.Column<string>(type: "TEXT", nullable: true),
-                    ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PurchaseId = table.Column<int>(type: "INTEGER", nullable: true)
+                    PurchaseId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_ProductTypes_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductTypes",
+                        name: "FK_PurchaseProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Purchases_PurchaseId",
+                        name: "FK_PurchaseProducts_Purchases_PurchaseId",
                         column: x => x.PurchaseId,
                         principalTable: "Purchases",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -144,8 +164,13 @@ namespace Api_Taller.src.Data.Migrations
                 column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_PurchaseId",
-                table: "Products",
+                name: "IX_PurchaseProducts_ProductId",
+                table: "PurchaseProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseProducts_PurchaseId",
+                table: "PurchaseProducts",
                 column: "PurchaseId");
 
             migrationBuilder.CreateIndex(
@@ -168,13 +193,16 @@ namespace Api_Taller.src.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "PurchaseProducts");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "ProductTypes");
+                name: "Purchases");
 
             migrationBuilder.DropTable(
-                name: "Purchases");
+                name: "ProductTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");

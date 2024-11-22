@@ -95,6 +95,10 @@ namespace Api_Taller.src.Repositories.Implements
 
         public async Task<IEnumerable<User>> SearchUsers(string query)
         {
+            if (query == null || query == "")
+            {
+                return await GetUsers();
+            } else {
             var users = await _context.Users.Where(u => u.Id.ToString().Contains(query) 
                                             || u.Name.Contains(query) 
                                             || u.Email.Contains(query) 
@@ -106,6 +110,7 @@ namespace Api_Taller.src.Repositories.Implements
                                             .Include(u => u.Gender)
                                             .ToListAsync();
             return users;
+            }
         }
 
         public async Task<bool> VerifyEmail(string email)

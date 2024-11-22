@@ -139,7 +139,7 @@ namespace Api_Taller.src.Services.Implements
         public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
         {
             var products = await _productRepository.GetAvailableProducts();
-            var productDTOs = products.Select(async p => 
+            var productDTOs = products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(async p => 
             {
                 p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
                 return p.ToProductDTO();
@@ -203,9 +203,20 @@ namespace Api_Taller.src.Services.Implements
 
         }
 
-        public Task<IEnumerable<ProductDTO>> SearchProducts(string query)
+        public async Task<IEnumerable<ProductDTO>> SearchProducts(string query, int pageNum, int pageSize)
         {
-            throw new NotImplementedException();
+            var products = await _productRepository.GetProducts();
+            if (query == null || query == "")
+            {
+                return products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(p => p.ToProductDTO());
+            }
+            var productDTOs = products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(async p => 
+            {
+                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+                return p.ToProductDTO();
+            }).ToList();
+
+            return await Task.WhenAll(productDTOs);
         }
     }
 }

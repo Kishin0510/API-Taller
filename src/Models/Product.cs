@@ -17,5 +17,6 @@ namespace Api_Taller.src.Models
         // Entity Framework Relations
         public int ProductTypeId { get; set; }
         public ProductType ProductType { get; set; } = null!;
+        public List<PurchaseProduct> PurchaseProducts { get; set; } = new List<PurchaseProduct>();
     }
 }

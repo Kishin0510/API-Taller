@@ -2,23 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api_Taller.src.DTOs.Product;
+using Bogus.DataSets;
+using System.ComponentModel.DataAnnotations;
+using Api_Taller.src.Models;
 
-namespace Api_Taller.src.Models
+namespace Api_Taller.src.DTOs.Purchase
 {
-    public class Purchase
+    public class PurchaseDTO
     {
         public int Id { get; set; }
         public DateTime PurchaseDate { get; set; }
-        public int TotalPrice { get; set; } = 0;
+        public int TotalPrice { get; set; }
         public string Country { get; set; } = null!;
         public string City { get; set; } = null!;
         public string Commune { get; set; } = null!;
         public string Street { get; set; } = null!;
-
-        // Entity Framework Relations
         public int UserId { get; set; }
-        public User ?User { get; set; }
-        public List<PurchaseProduct> PurchaseProducts { get; set; } = new List<PurchaseProduct>();
-        
+        public List<PurchaseProductDTO> PurchaseProducts { get; set; } = new List<PurchaseProductDTO>();
     }
 }

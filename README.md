@@ -21,7 +21,11 @@ Ayudantes:
    ```sh
    dotnet restore
    ```
-4. Corre el proyecto:
+4. Iniciar la base de datos:
+   ```sh
+   dotnet ef database update
+   ```      
+5. Corre el proyecto:
    ```sh
    dotnet build
    ```

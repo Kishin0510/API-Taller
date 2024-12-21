@@ -35,7 +35,7 @@ namespace Api_Taller.src.Controllers
         /// <param name="id">La id del usuario. </param>
         /// <param name="changePasswordDto">La información de cambio de contraseña. </param>
         /// <returns>Un mensaje de confirmación. </returns>
-        [HttpPut("{id}/password")]
+        [HttpPut("{id:int}/password")]
         [Authorize]
         public async Task<ActionResult<string>> ChangePassword (int id, [FromBody] ChangePasswordDTO changePasswordDto)
         {
@@ -63,7 +63,7 @@ namespace Api_Taller.src.Controllers
         /// <param name="id">La id del usuario. </param>
         /// <param name="newState">El nuevo estado del usuario (true o false). </param>
         /// <returns>Mensaje de confirmación. </returns>
-        [HttpPut("{id}/state")]
+        [HttpPut("{id:int}/state")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<string>> ChangeUserState(int id, [FromBody] string newState)
         {
@@ -89,7 +89,7 @@ namespace Api_Taller.src.Controllers
         /// <param name="id">La id del usuario. </param>
         /// <param name="editUserDTO">La información a editar del usuario. </param>
         /// <returns>Mensaje de confirmación. </returns>
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [Authorize]
         public async Task<ActionResult<string>> EditUser(int id, [FromBody] EditUserDTO editUserDTO)
         {
@@ -120,7 +120,7 @@ namespace Api_Taller.src.Controllers
         /// <param name="pageNum">El número de la página. </param>
         /// <param name="pageSize">El tamaño de la página. </param>
         /// <returns>Una lista de usuarios. </returns>
-        [HttpGet("search/{pageNum}/{pageSize}")]
+        [HttpGet("search/{pageNum:int}/{pageSize:int}")]
         [Authorize (Roles = "Admin")]
         public ActionResult<IEnumerable<UserDTO>> SearchUsers([FromQuery] string? query,int pageNum, int pageSize)
         {
@@ -138,7 +138,7 @@ namespace Api_Taller.src.Controllers
         /// </summary>
         /// <param name="id">La id del usuario. </param>
         /// <returns>Mensaje de confirmación. </returns>
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{id:int}")]
         [Authorize (Roles = "User")]
         public async Task<ActionResult<string>> DeleteUser(int id)
         {

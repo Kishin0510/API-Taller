@@ -46,7 +46,7 @@ namespace Api_Taller.src.Controllers
         /// </summary>
         /// <param name="id">La id del usuario. </param>
         /// <returns>Lista de compras del usuario. </returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         [Authorize(Roles = "User")]
         public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetPurchaseById(int id)
         {
@@ -69,7 +69,7 @@ namespace Api_Taller.src.Controllers
         /// <param name="pageNum">El número de la página. </param>
         /// <param name="pageSize">El tamaño de la página. </param>
         /// <returns>Una lista con las compras. </returns>
-        [HttpGet("{pageNum}/{pageSize}")]
+        [HttpGet("{pageNum:int}/{pageSize:int}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<PurchaseDTO>>> GetAllPurchases(int pageNum, int pageSize)
         {

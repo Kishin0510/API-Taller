@@ -137,17 +137,53 @@ namespace Api_Taller.src.Services.Implements
             return editProduct;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
-        {
-            var products = await _productRepository.GetAvailableProducts();
-            var productDTOs = products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(async p => 
-            {
-                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
-                return p.ToProductDTO();
-            }).ToList();
-            
-            return await Task.WhenAll(productDTOs);
-        }
+//        public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
+//        {
+//            var products = await _productRepository.GetAvailableProducts();
+//            var productDTOs = products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(async p => 
+//            {
+//                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+//                return p.ToProductDTO();
+//            }).ToList();
+//            
+//            return await Task.WhenAll(productDTOs);
+//        }
+
+public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(string? query, string? order, int pageNum, int pageSize)
+{
+    var products = await _productRepository.GetProducts();
+    var productDTOs = products.Select(async p => 
+    {
+        p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+        return p.ToProductDTO();
+    }).ToList();
+
+    var updatedProducts = await Task.WhenAll(productDTOs);
+
+    if (!string.IsNullOrEmpty(query))
+    {
+        query = query.ToLower();
+        updatedProducts = updatedProducts.Where(p => p.Name.ToLower().Contains(query)
+                                                || p.ProductType.ToLower().Contains(query))
+                                         .ToArray();
+    }
+
+    if (order == "asc")
+    {
+        updatedProducts = updatedProducts.OrderBy(p => p.Name).ToArray();
+    }
+    else if (order == "desc")
+    {
+        updatedProducts = updatedProducts.OrderByDescending(p => p.Name).ToArray();
+    }
+
+    // Implementar la paginación
+    updatedProducts = updatedProducts.Skip((pageNum - 1) * pageSize)
+                                     .Take(pageSize)
+                                     .ToArray();
+
+    return updatedProducts;
+}        
 
         public async Task<IEnumerable<ProductDTO>> GetProducts()
         {

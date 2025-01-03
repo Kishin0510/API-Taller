@@ -306,3 +306,4 @@ d:\Programas\Repositorios\API-Taller\obj\Debug\net8.0\refint\Api-Taller.dll
 d:\Programas\Repositorios\API-Taller\obj\Debug\net8.0\Api-Taller.pdb
 D:\Programas\Repositorios\API-Taller\obj\Debug\net8.0\Api-Taller.genruntimeconfig.cache
 D:\Programas\Repositorios\API-Taller\obj\Debug\net8.0\ref\Api-Taller.dll
+C:\Users\NicoK\OneDrive\Documentos\Universidad\2024 - Semestre II\Intro al Desarrollo WebMóvil\Taller\Api-Taller\bin\Debug\net8.0\Taller IDWM.postman_collection.json

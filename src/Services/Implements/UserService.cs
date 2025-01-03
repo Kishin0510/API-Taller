@@ -79,7 +79,7 @@ namespace Api_Taller.src.Services.Implements
         public async Task<IEnumerable<Gender>> GetGenders()
         {
             var genders = await _genderRepository.GetGenders();
-            return genders;
+            return await Task.FromResult(genders);
         }
 
         public async Task<IEnumerable<User>> GetUsers()

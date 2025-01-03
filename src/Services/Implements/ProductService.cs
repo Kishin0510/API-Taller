@@ -107,7 +107,8 @@ namespace Api_Taller.src.Services.Implements
                 var validProduct = await _productRepository.ValidProductByNameAndType(editProductDTO.Name, product.ProductTypeId);
                 if (validProduct) {throw new Exception("Un producto con el mismo nombre ya existe");}
             }
-
+            string newImageUrl = product.ImageUrl;
+            string newImageId = product.ImageId;
             if (editProductDTO.Image != null)
             {
                 if (editProductDTO.Image.ContentType != "image/png" && editProductDTO.Image.ContentType != "image/jpeg")
@@ -130,23 +131,72 @@ namespace Api_Taller.src.Services.Implements
                 {
                     throw new Exception("Error al subir la imagen");
                 }
-                string newImageUrl = uploadResult.SecureUrl.AbsoluteUri;
-                string newImageId = uploadResult.PublicId;
+                newImageUrl = uploadResult.SecureUrl.AbsoluteUri;
+                newImageId = uploadResult.PublicId;
             }
-            var editProduct = await _productRepository.UpdateProduct(id, editProductDTO, product.ImageUrl, product.ImageId);
+            var editProduct = await _productRepository.UpdateProduct(id, editProductDTO, newImageUrl, newImageId);
             return editProduct;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
+//        public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(int pageNum, int pageSize)
+//        {
+//            var products = await _productRepository.GetAvailableProducts();
+//            var productDTOs = products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(async p => 
+//            {
+//                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+//                return p.ToProductDTO();
+//            }).ToList();
+//            
+//            return await Task.WhenAll(productDTOs);
+//        }
+
+public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(string? query, string? order, int pageNum, int pageSize)
+{
+    var products = await _productRepository.GetProducts();
+    var productDTOs = products.Select(async p => 
+    {
+        p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
+        return p.ToProductDTO();
+    }).ToList();
+
+    var updatedProducts = await Task.WhenAll(productDTOs);
+
+    if (!string.IsNullOrEmpty(query))
+    {
+        query = query.ToLower();
+        updatedProducts = updatedProducts.Where(p => p.Name.ToLower().Contains(query)
+                                                || p.ProductType.ToLower().Contains(query))
+                                         .ToArray();
+    }
+
+    if (order == "asc")
+    {
+        updatedProducts = updatedProducts.OrderBy(p => p.Name).ToArray();
+    }
+    else if (order == "desc")
+    {
+        updatedProducts = updatedProducts.OrderByDescending(p => p.Name).ToArray();
+    }
+
+    // Implementar la paginación
+    updatedProducts = updatedProducts.Skip((pageNum - 1) * pageSize)
+                                     .Take(pageSize)
+                                     .ToArray();
+
+    return updatedProducts;
+}
+
+        public async Task<ProductDTO> GetProductById(int id)
         {
-            var products = await _productRepository.GetAvailableProducts();
-            var productDTOs = products.Skip((pageNum - 1) * pageSize).Take(pageSize).Select(async p => 
+            var product = _productRepository.GetProductById(id);
+            if (product == null)
             {
-                p.ProductType = await _productTypeRepository.GetProductType(p.ProductTypeId);
-                return p.ToProductDTO();
-            }).ToList();
-            
-            return await Task.WhenAll(productDTOs);
+                throw new Exception("Producto no encontrado");
+            }
+            var productEntity = await product;
+            var productType = await _productTypeRepository.GetProductType(productEntity.ProductTypeId);
+            var productDTO = productEntity.ToProductDTO();
+            return await Task.FromResult(productDTO);
         }
 
         public async Task<IEnumerable<ProductDTO>> GetProducts()
@@ -160,6 +210,12 @@ namespace Api_Taller.src.Services.Implements
 
             return await Task.WhenAll(productDTOs);
 
+        }
+
+        public async Task<ProductType[]> GetProductTypes()
+        {
+            var productTypes = await _productTypeRepository.GetProductTypes();
+            return await Task.FromResult(productTypes.ToArray());
         }
 
         public async Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query, string order)

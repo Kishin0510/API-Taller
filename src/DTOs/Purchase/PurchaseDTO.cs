@@ -19,7 +19,7 @@ namespace Api_Taller.src.DTOs.Purchase
         /// <summary>
         /// Fecha de la compra.
         /// </summary>
-        public DateTime PurchaseDate { get; set; }
+        public string PurchaseDate { get; set; } = null!;
 
         /// <summary>
         /// Precio total de la compra.
@@ -50,6 +50,8 @@ namespace Api_Taller.src.DTOs.Purchase
         /// Id del usuario.
         /// </summary>
         public int UserId { get; set; }
+
+        public string UserName { get; set; } = null!;
 
         /// <summary>
         /// Lista de productos de la compra.

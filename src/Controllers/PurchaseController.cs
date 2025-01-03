@@ -85,7 +85,7 @@ namespace Api_Taller.src.Controllers
         /// <returns></returns>
         [HttpGet("search")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<PurchaseDTO>>> SearchPurchases([FromQuery] string name, [FromQuery] string date)
+        public async Task<ActionResult<IEnumerable<PurchaseDTO>>> SearchPurchases([FromQuery] string? name, [FromQuery] string? date)
         {
             var purchases = await _purchaseService.SearchPurchases(name, date);
             return Ok(purchases);

@@ -121,6 +121,21 @@ namespace Api_Taller.src.Controllers
             return Ok(products);
         }
 
+        [HttpGet("{id:int}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ProductDTO>> GetProductById(int id)
+        {
+            var product = await _productService.GetProductById(id);
+            return Ok(product);
+        }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<ProductType[]>> GetProductTypes()
+        {
+            var productTypes = await _productService.GetProductTypes();;
+            return Ok(productTypes);
+        }
+
 
     }
 }

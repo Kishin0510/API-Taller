@@ -15,9 +15,10 @@ namespace Api_Taller.src.Mappers
             return new PurchaseDTO
             {
                 Id = purchaseModel.Id,
-                PurchaseDate = purchaseModel.PurchaseDate,
+                PurchaseDate = purchaseModel.PurchaseDate.ToString("dd-MM-yyyy"),
                 TotalPrice = purchaseModel.TotalPrice,
                 UserId = purchaseModel.UserId,
+                UserName = purchaseModel.User?.Name ?? "No User",
                 Country = purchaseModel.Country,
                 City = purchaseModel.City,
                 Commune = purchaseModel.Commune,
@@ -25,6 +26,7 @@ namespace Api_Taller.src.Mappers
                 PurchaseProducts = purchaseModel.PurchaseProducts.Select(p => new PurchaseProductDTO
                 {
                     ProductId = p.ProductId,
+                    ProductName = p.Product.Name,
                     Quantity = p.Quantity
                 }).ToList()
             };

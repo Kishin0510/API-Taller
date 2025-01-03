@@ -160,5 +160,15 @@ namespace Api_Taller.src.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet("genders")]
+        public async Task<ActionResult<IEnumerable<Gender>>> GetGenders() {
+            var genders = await _userService.GetGenders();
+            if (genders == null)
+            {
+                return BadRequest("No se encontraron géneros");
+            }
+            return Ok(genders);
+        }
     }
+
 }

@@ -12,6 +12,8 @@ namespace Api_Taller.src.DTOs.Purchase
         /// </summary>
         public int ProductId { get; set; }
 
+        public string ProductName { get; set; } = null!;
+
         /// <summary>
         /// Cantidad del producto.
         /// </summary>

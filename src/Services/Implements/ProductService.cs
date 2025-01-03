@@ -107,7 +107,8 @@ namespace Api_Taller.src.Services.Implements
                 var validProduct = await _productRepository.ValidProductByNameAndType(editProductDTO.Name, product.ProductTypeId);
                 if (validProduct) {throw new Exception("Un producto con el mismo nombre ya existe");}
             }
-
+            string newImageUrl = product.ImageUrl;
+            string newImageId = product.ImageId;
             if (editProductDTO.Image != null)
             {
                 if (editProductDTO.Image.ContentType != "image/png" && editProductDTO.Image.ContentType != "image/jpeg")
@@ -130,10 +131,10 @@ namespace Api_Taller.src.Services.Implements
                 {
                     throw new Exception("Error al subir la imagen");
                 }
-                string newImageUrl = uploadResult.SecureUrl.AbsoluteUri;
-                string newImageId = uploadResult.PublicId;
+                newImageUrl = uploadResult.SecureUrl.AbsoluteUri;
+                newImageId = uploadResult.PublicId;
             }
-            var editProduct = await _productRepository.UpdateProduct(id, editProductDTO, product.ImageUrl, product.ImageId);
+            var editProduct = await _productRepository.UpdateProduct(id, editProductDTO, newImageUrl, newImageId);
             return editProduct;
         }
 
@@ -183,7 +184,20 @@ public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(string? query, s
                                      .ToArray();
 
     return updatedProducts;
-}        
+}
+
+        public async Task<ProductDTO> GetProductById(int id)
+        {
+            var product = _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                throw new Exception("Producto no encontrado");
+            }
+            var productEntity = await product;
+            var productType = await _productTypeRepository.GetProductType(productEntity.ProductTypeId);
+            var productDTO = productEntity.ToProductDTO();
+            return await Task.FromResult(productDTO);
+        }
 
         public async Task<IEnumerable<ProductDTO>> GetProducts()
         {
@@ -196,6 +210,12 @@ public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(string? query, s
 
             return await Task.WhenAll(productDTOs);
 
+        }
+
+        public async Task<ProductType[]> GetProductTypes()
+        {
+            var productTypes = await _productTypeRepository.GetProductTypes();
+            return await Task.FromResult(productTypes.ToArray());
         }
 
         public async Task<IEnumerable<ProductDTO>> SearchAvailableProducts(string query, string order)

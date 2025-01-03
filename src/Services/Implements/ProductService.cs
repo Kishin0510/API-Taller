@@ -271,8 +271,9 @@ public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(string? query, s
             var updateProduct = await Task.WhenAll(productTask);
             if (!string.IsNullOrEmpty(query))
             {
+                query = query.ToLower();
                 var productDTOquery = updateProduct.Where(p => p.Id.ToString().Contains(query)
-                                            || p.Name.Contains(query)
+                                            || p.Name.ToLower().Contains(query)
                                             || p.Price.ToString().Contains(query)
                                             || p.Stock.ToString().Contains(query)
                                             || p.ProductType.Type.Contains(query))

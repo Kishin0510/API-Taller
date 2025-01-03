@@ -46,10 +46,10 @@ namespace Api_Taller.src.Repositories.Implements
         public async Task<IEnumerable<Purchase>> SearchPurchases(string? nameQuery, string? dateQuery)
         {
             var purchases = await _context.Purchases.Include(p => p.User).Include(p => p.PurchaseProducts).ThenInclude(pp => pp.Product).ToListAsync();
-
             if (!string.IsNullOrEmpty(nameQuery))
             {
-                purchases = purchases.Where(p => p.User.Name.Contains(nameQuery)).ToList();
+                nameQuery = nameQuery.ToLower();
+                purchases = purchases.Where(p => p.User.Name.ToLower().Contains(nameQuery)).ToList();
             }
             if (!string.IsNullOrEmpty(dateQuery))
             {

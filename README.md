@@ -27,5 +27,5 @@ Ayudantes:
    ```      
 5. Corre el proyecto:
    ```sh
-   dotnet build
+   dotnet run
    ```

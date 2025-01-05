@@ -27,7 +27,10 @@ namespace Api_Taller.src.Mappers
                 {
                     ProductId = p.ProductId,
                     ProductName = p.Product.Name,
-                    Quantity = p.Quantity
+                    ProductType = p.Product.ProductType.Type,
+                    Price = p.Product.Price,
+                    Quantity = p.Quantity,
+                    TotalPrice = p.Product.Price * p.Quantity
                 }).ToList()
             };
         }

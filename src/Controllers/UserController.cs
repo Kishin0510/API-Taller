@@ -64,7 +64,7 @@ namespace Api_Taller.src.Controllers
         /// <param name="newState">El nuevo estado del usuario (true o false). </param>
         /// <returns>Mensaje de confirmación. </returns>
         [HttpPut("{id:int}/state")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<string>> ChangeUserState(int id, [FromBody] string newState)
         {
             try

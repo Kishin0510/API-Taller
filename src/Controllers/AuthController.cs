@@ -29,7 +29,7 @@ namespace Api_Taller.src.Controllers
                 return Ok(result);
 
             } catch (Exception e) {
-                return BadRequest(e.Message);
+                return BadRequest(new {Message = e.Message});
             }
         }
 

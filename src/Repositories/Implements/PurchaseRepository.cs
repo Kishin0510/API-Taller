@@ -37,7 +37,7 @@ namespace Api_Taller.src.Repositories.Implements
             return await _context.Purchases
             .Include(p => p.User)
             .Include(p => p.PurchaseProducts)
-            .ThenInclude(pp => pp.Product)
+            .ThenInclude(pp => pp.Product).ThenInclude(p => p.ProductType)
             .Where(p => p.UserId == id)
             .OrderBy(p => p.PurchaseDate)
             .ToListAsync();

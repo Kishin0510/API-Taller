@@ -50,7 +50,7 @@ namespace Api_Taller.src.Controllers
                 return BadRequest(new {Message = e.Message});
             }
         }
-        [HttpPost("sumItemCard")]
+        [HttpPost("sumItemCart")]
         public async Task<ActionResult> SumItemCart([FromQuery] int cartId, [FromQuery] int productId)
         {
             try {

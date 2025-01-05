@@ -171,11 +171,11 @@ public async Task<IEnumerable<ProductDTO>> GetAvailableProducts(string? query, s
 
     if (order == "asc")
     {
-        updatedProducts = updatedProducts.OrderBy(p => p.Name).ToArray();
+        updatedProducts = updatedProducts.OrderBy(p => p.Price).ToArray();
     }
     else if (order == "desc")
     {
-        updatedProducts = updatedProducts.OrderByDescending(p => p.Name).ToArray();
+        updatedProducts = updatedProducts.OrderByDescending(p => p.Price).ToArray();
     }
 
     // Implementar la paginación

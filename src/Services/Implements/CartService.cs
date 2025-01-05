@@ -23,7 +23,7 @@ namespace Api_Taller.src.Services.Implements
         public async Task AddItemCart(CartItemDto cartItemDto, int? userId)
         {
             if (userId == null){
-                AddCartItemCookies(cartItemDto);
+                await AddCartItemCookies(cartItemDto);
             }
             else {
                 var cart = await _cartRepository.GetCartByUserId(userId.Value);

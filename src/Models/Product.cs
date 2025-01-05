@@ -53,5 +53,10 @@ namespace Api_Taller.src.Models
         /// Lista de compras de un producto.
         /// </summary>
         public List<PurchaseProduct> PurchaseProducts { get; set; } = new List<PurchaseProduct>();
+
+        /// <summary>
+        /// Lista de items del carrito.
+        /// </summary>
+        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 }

@@ -62,5 +62,10 @@ namespace Api_Taller.src.Models
         /// Género del usuario.
         /// </summary>
         public Gender Gender { get; set; } = null!;
+
+        /// <summary>
+        /// Carrito del usuario.
+        /// </summary>
+        public Cart? Cart { get; set; }
     }
 }

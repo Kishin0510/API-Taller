@@ -26,11 +26,11 @@ namespace Api_Taller.src.Mappers
                 PurchaseProducts = purchaseModel.PurchaseProducts.Select(p => new PurchaseProductDTO
                 {
                     ProductId = p.ProductId,
-                    ProductName = p.Product.Name,
-                    ProductType = p.Product.ProductType.Type,
-                    Price = p.Product.Price,
+                    ProductName = p.Product?.Name ?? "Desconocido",
+                    ProductType = p.Product?.ProductType?.Type ?? "Desconocido",
+                    Price = p.Product?.Price ?? 0,
                     Quantity = p.Quantity,
-                    TotalPrice = p.Product.Price * p.Quantity
+                    TotalPrice = (p.Product?.Price ?? 0) * p.Quantity
                 }).ToList()
             };
         }
